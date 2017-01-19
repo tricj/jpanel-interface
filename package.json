@@ -1,0 +1,22 @@
+{
+  "name": "JPanel-Interface",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Interface for dissertation project",
+  "repository": "https://github.com/tricj/jpanel-interface",
+  "devDependencies": {
+    "bootbox": "^4.4.0",
+    "bootstrap": "^4.0.0-alpha.5",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "http": "0.0.0",
+    "jquery": "^3.1.1",
+    "morgan": "^1.7.0",
+    "normalize.css": "^5.0.0",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "^2.3.2"
+  },
+  "dependencies": {}
+}
