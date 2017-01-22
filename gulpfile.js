@@ -7,8 +7,7 @@ gulp.task('sass', ()=>{
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(gulp.dest('./public/css/'))
 });
-
-gulp.task('default', ()=>{
+gulp.task('default',['sass'], ()=>{
    gulp.watch('./public/sass/**/*.scss', ['sass']);
    server;
 });

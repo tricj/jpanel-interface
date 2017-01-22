@@ -36,6 +36,7 @@ requireStaticModule('normalize.css');
 requireStaticModule('bootstrap');
 requireStaticModule('jquery');
 requireStaticModule('tether');
+requireStaticModule('font-awesome');
 
 function requireStaticModule(moduleName){
     app.use(

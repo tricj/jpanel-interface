@@ -1,17 +1,27 @@
 @import "colours";
+@import "scrollbars";
 @import url('https://fonts.googleapis.com/css?family=Raleway');
+
+@include scrollbars(0.5em, $theme-light);
 
 html, body {
   background: $theme;
 }
 
 header {
+  a {
+    color: $text-normal;
+  }
+
   nav.top-nav {
     background: $theme-light;
     height: 50px;
     position: fixed;
     width: 100%;
     margin-top: -50px;
+    ul.nav-float-right {
+      float: right;
+    }
     ul {
       list-style:none;
       margin: 0;
@@ -28,7 +38,6 @@ header {
           padding: 0 20px;
           display: block;
           line-height: 50px;
-          color: $text-normal;
         }
         a:hover {
           color: $text-hover;
@@ -41,6 +50,12 @@ header {
 
   nav.side-nav {
     position: fixed;
+    overflow-y: scroll;
+    a:hover {
+      background: $theme-highlight;
+      color: $text-hover;
+      text-decoration: none;
+    }
     ul {
       list-style: none;
       margin: 0;
@@ -50,17 +65,64 @@ header {
     height: 100%;
     background: $theme-light-alternative;
 
-    box-shadow: 0 5px 7px 0 rgba(34, 81, 115, 0.35);
+    //box-shadow: 0 5px 7px 0 rgba(34, 81, 115, 0.35);
+    //TODO: Fix missing shadow
 
+    h3 {
+      font-size: 22px;
+      line-height: 44px;
+      text-align: center;
+      margin: 0 25px;
+      border-bottom: 1px solid $theme-light;
+    }
+    .link-group {
+      a.title {
+        padding-left: 25px;
+        display: block;
+        font-size: 18px;
+        line-height: 36px;
+      }
+      a:focus {
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.title::after {
+        float:right;
+        padding-right: 25px;
+        content: '\f0d8';
+        font-family: FontAwesome;
+      }
+      a.title.collapsed::after {
+        content: '\f0d7';
+      }
+      a.title:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        a {
+          display:block;
+          text-align: right;
+          padding: 0 25px;
+          font-size: 16px;
+          line-height: 32px;
+          font-weight: 100;
+        }
+      }
+    }
   }
 }
 
 .content {
   margin-left: 225px;
   margin-top: 50px;
-  height: 1000px;
+  padding: 25px;
 }
 
+a {
+  color: $theme-highlight;
+}
 * {
   font-family: 'Raleway', sans-serif;
+  color: $text-normal;
 }

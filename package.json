@@ -4,6 +4,7 @@
   "private": true,
   "description": "Interface for dissertation project",
   "repository": "https://github.com/tricj/jpanel-interface",
+  // TODO: implement autoprefixer
   "devDependencies": {
     "bootbox": "^4.4.0",
     "bootstrap": "^4.0.0-alpha.5",
