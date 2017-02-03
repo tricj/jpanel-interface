@@ -1,0 +1,18 @@
+extends ../layout
+block javascript
+    script(type='text/javascript', src='/js/dropdown.js')
+    script(type='text/javascript', src='https://use.fontawesome.com/c695705283.js')
+block content
+    .content
+        h3 Create a new cluster
+        form#createCluster.form-horizontal(action='/clusters/create', method='post')
+            .form-group
+                label.form-control-label(for='name') Name
+                input#name.form-control(type='password', name='name')
+                small.form-text.text-muted Name your cluster
+            .form-group
+                label.form-control-label(for='description') Description
+                textarea#description.form-control(rows='5', name='description')
+                small.form-text.text-muted Give your cluster a description
+            .form-group
+                input.btn.btn-outline-primary.float-sm-right(type='submit', value='Create cluster')

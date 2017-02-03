@@ -1,7 +1,7 @@
 header
     nav.top-nav
         ul
-            li: h1: a(href='') Dashboard
+            li: h1: a(href='/') Dashboard
             li: a(href='') Link 1
             li: a(href='') Link 2
             li: a(href='') Link 3
@@ -10,34 +10,13 @@ header
             li: a(href='') R-Link 1
             li: a(href='') R-Link 2
     nav.side-nav
-        h3 Page title
+        h3 Menu
         .link-group
-            a.title(href='', data-toggle='collapse', data-target='#linkgroup1') Group name
+            a.title(href='', data-toggle='collapse', data-target='#linkgroup1') Account
             ul.collapse.show#linkgroup1
-                li: a(href='') Link 1
-                li: a(href='') Link 2
-                li: a(href='') Link 3
+                li: a(href='/account/change-password/') Change password
         .link-group
-            a.title(href='', data-toggle='collapse', data-target='#linkgroup2') Group name
+            a.title(href='', data-toggle='collapse', data-target='#linkgroup2') Clusters
             ul.collapse.show#linkgroup2
-                li: a(href='') Link 4
-                li: a(href='') Link 5
-                li: a(href='') Link 6
-        .link-group
-            a.title(href='', data-toggle='collapse', data-target='#linkgroup3') Group name
-            ul.collapse.show#linkgroup3
-                li: a(href='') Link 7
-                li: a(href='') Link 8
-                li: a(href='') Link 9
-        .link-group
-            a.title(href='', data-toggle='collapse', data-target='#linkgroup4') Group name
-            ul.collapse.show#linkgroup4
-                li: a(href='') Link 10
-                li: a(href='') Link 11
-                li: a(href='') Link 12
-        .link-group
-            a.title(href='', data-toggle='collapse', data-target='#linkgroup5') Group name
-            ul.collapse.show#linkgroup5
-                li: a(href='') Link 13
-                li: a(href='') Link 14
-                li: a(href='') Link 15
+                li: a(href='/clusters/') Overview
+                li: a(href='/clusters/create') Create new cluster

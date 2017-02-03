@@ -6,6 +6,14 @@
 
 html, body {
   background: $theme;
+  height: 100%;
+}
+
+.form-control, .btn {
+  border-radius: 0;
+}
+hr {
+  border-color: $theme-light-alternative;
 }
 
 header {
@@ -77,10 +85,11 @@ header {
     }
     .link-group {
       a.title {
+        $s : 16px;
         padding-left: 25px;
         display: block;
-        font-size: 18px;
-        line-height: 36px;
+        font-size: $s;
+        line-height: $s*2;
       }
       a:focus {
         color: inherit;
@@ -101,11 +110,12 @@ header {
       }
       ul {
         a {
+          $s : 12px;
           display:block;
           text-align: right;
           padding: 0 25px;
-          font-size: 16px;
-          line-height: 32px;
+          font-size: $s;
+          line-height: $s*2;
           font-weight: 100;
         }
       }
@@ -113,10 +123,23 @@ header {
   }
 }
 
+
+.wrapper {
+  height: 100%;
+}
 .content {
   margin-left: 225px;
   margin-top: 50px;
   padding: 25px;
+  min-height: 100%;
+  height: 100%;
+
+
+  #clusterChart {
+    width: 100%;
+    height: 100%;
+    display:inline-block;
+  }
 }
 
 a {

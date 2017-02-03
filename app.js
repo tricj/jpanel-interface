@@ -20,6 +20,8 @@ app.use(logger('dev'));
  * Configure routes
  */
 app.use('/', require('./routes/index'));
+app.use('/', require('./routes/account'));
+app.use('/', require('./routes/clusters'));
 
 /*
  * Configure views
@@ -37,6 +39,7 @@ requireStaticModule('bootstrap');
 requireStaticModule('jquery');
 requireStaticModule('tether');
 requireStaticModule('font-awesome');
+requireStaticModule('vis');
 
 function requireStaticModule(moduleName){
     app.use(
