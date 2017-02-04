@@ -5,18 +5,31 @@
   "description": "Interface for dissertation project",
   "repository": "https://github.com/tricj/jpanel-interface",
   "devDependencies": {
+    "bcryptjs": "^2.4.0",
+    "body-parser": "^1.16.0",
     "bootbox": "^4.4.0",
     "bootstrap": "^4.0.0-alpha.5",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "express-session": "^1.15.0",
+    "express-validator": "^3.1.2",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "http": "0.0.0",
     "jquery": "^3.1.1",
     "morgan": "^1.7.0",
+    "mysql": "^2.13.0",
     "normalize.css": "^5.0.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pug": "^2.0.0-beta6",
+    "sequelize": "^3.30.1",
     "serve-favicon": "^2.3.2",
     "vis": "^4.18.1"
+  },
+  "dependencies": {
+    "flash": "^1.1.0"
   }
 }

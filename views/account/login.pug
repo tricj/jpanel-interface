@@ -1,0 +1,22 @@
+doctype html
+html(lang='en')
+    head
+        include ../header
+    body
+        .container-fluid
+            .index-content.col-8.offset-2
+                .display-3 Welcome to JPanel
+                small The simple cloud control panel
+                hr
+                form#login.form-horizontal.col-6.offset-3(action='/account/login', method='post')
+                    h4 Please login to continue
+                    if error.length > 0
+                        div.alert.alert-danger= error
+                    .form-group
+                        label.form-control-label(for='username') Username
+                        input#username.form-control(type='text', name='username')
+                    .form-group
+                        label.form-control-label(for='password') Password
+                        input#password.form-control(type='password', name='password')
+                    .form-group
+                        input.btn.btn-primary.float-sm-right(type='submit', value='Login to Dashboard')

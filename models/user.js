@@ -1,0 +1,52 @@
+var Sequelize   = require('sequelize');
+var orm = require('../config/database');
+var bcrypt      = require('bcryptjs');
+
+var User = orm.define('user', {
+    username: {
+        type: Sequelize.STRING
+    },
+    password: {
+        type: Sequelize.STRING
+    }
+}, {
+    freezeTableName: true
+});
+
+module.exports = User;
+
+module.exports.hashPassword = function(user, callback) {
+    bcrypt.genSalt(10, function(err,salt){
+        bcrypt.hash(user.password, salt, function(err, hash){
+            user.password = hash;
+            callback();
+        })
+    });
+};
+
+module.exports.createUser = function(user, callback) {
+    User.hashPassword(user, function(){
+        User.sync().then(function(){
+            return User.create(user)
+        });
+    });
+};
+
+module.exports.getUserByUsername = function(username, callback) {
+    User.findOne({where: { username: username}}).then(function(user){
+        callback(user)
+    });
+};
+
+module.exports.getUserById = function(id, callback) {
+    User.findOne({where: { id: id}}).then(function(user){
+        callback(null, user);
+    });
+};
+
+module.exports.comparePassword = function(inputPassword, hash, callback){
+    bcrypt.compare(inputPassword, hash, function(err, isMatch){
+        if(err) throw err;
+        callback(null, isMatch);
+    })
+};
