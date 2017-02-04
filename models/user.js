@@ -40,7 +40,7 @@ module.exports.getUserByUsername = function(username, callback) {
 
 module.exports.getUserById = function(id, callback) {
     User.findOne({where: { id: id}}).then(function(user){
-        callback(null, user);
+        callback(user);
     });
 };
 
@@ -49,4 +49,14 @@ module.exports.comparePassword = function(inputPassword, hash, callback){
         if(err) throw err;
         callback(null, isMatch);
     })
+};
+
+module.exports.changePassword = function(userID, newPassword, callback) {
+    bcrypt.genSalt(10, function(err, salt){
+        bcrypt.hash(newPassword, salt, function(err, hash){
+            User.findOne({where: {id: userID}}).then(function(user){
+                user.set("password", hash).save().then(callback());
+            });
+        })
+    });
 };

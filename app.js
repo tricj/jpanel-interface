@@ -63,9 +63,6 @@ app.use(flash());
  * Configure global variables
  */
 app.use(function(req,res,next) {
-    // Flash messages
-    res.locals.success_msg  = req.flash('success_msg');
-    res.locals.error_msg    = req.flash('error_msg');
     // Passport errors
     res.locals.error        = req.flash('error');
     // User

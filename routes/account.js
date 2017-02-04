@@ -34,26 +34,52 @@ passport.use(new LocalStrategy(
 
 /* slightly tweaked from PassportJS documentation */
 passport.serializeUser(function(user, done){
-    console.log(">>> serializing user");
     done(null, user.id);
 });
 passport.deserializeUser(function(id, done){
-    User.getUserById(id, function(err, user){
-        console.log(">>> getting user by ID");
-        done(err, user);
+    User.getUserById(id, function(user){
+        done(null, user);
     });
 });
 
 router.get('/logout', authentication.isLoggedIn, function(req,res,next) {
    req.logout();
-   req.flash('success_msg', 'You are now logged out');
-
    res.redirect('/');
 });
 
-
-
 /* POST requests */
+router.post('/change-password', authentication.isLoggedIn, function(req, res, next){
+    console.log("changing password");
+    var currentPassword = req.body.currentPassword;
+    var newPassword = req.body.newPassword;
+    var confirmNewPassword = req.body.cNewPassword;
+
+    req.checkBody('currentPassword', 'Current password is required').notEmpty();
+    req.checkBody('newPassword', 'New password must between 5-30 characters long').isLength(5,30);
+    req.checkBody('cNewPassword', 'Passwords do not match').equals(req.body.newPassword);
+
+    var errors = req.validationErrors();
+    var userdata = {};
+    if(errors){
+        userdata.errors = errors;
+        res.render('account/change-password', userdata);
+    } else {
+        User.comparePassword(currentPassword, req.user.password, function(err, isMatch){
+            if (err) throw err;
+            if(isMatch){
+                User.changePassword(req.user.id, newPassword, function(){
+                    userdata.success_msg = 'Password successfully changed';
+                    console.log(">>>>>>>>>>>>>> SUCCESSFUL PASSWORD CHANGE");
+                    res.render('account/change-password', userdata);
+                });
+            } else {
+                userdata.error_msg = "Incorrect password";
+                res.render('account/change-password', userdata);
+            }
+        });
+    }
+});
+
 router.post('/login', passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: '/account/login',
