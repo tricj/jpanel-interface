@@ -1,22 +1,42 @@
 header
-    nav.top-nav
-        ul
-            li: h1: a(href='/') Dashboard
-            li: a(href='') Link 1
-            li: a(href='') Link 2
-            li: a(href='') Link 3
-            li: a(href='') Link 4
-        ul.nav-float-right
-            li: a(href='/account/logout') Logout
     nav.side-nav
-        h3 Menu
+        h3: a(href='/') Dashboard
+        .node-selector
+            h6 Active node
+            select.custom-select
+                option(data-type='cluster') Cluster Name1
+                option  Node A
+                option  Node B
+                option(data-type='cluster') Cluster Name2
+                option  Node C
+                option  Node D
+                option  Node E
+            small: a(href='#') Manage this node
         .link-group
             a.title(href='', data-toggle='collapse', data-target='#linkgroup1') Account
             ul.collapse.show#linkgroup1
-                li: a(href='/account/change-password/') Change password
                 li: a(href='/account/manage-users/') Manage users
+                li: a(href='/account/change-password/') Change password
         .link-group
             a.title(href='', data-toggle='collapse', data-target='#linkgroup2') Clusters
             ul.collapse.show#linkgroup2
                 li: a(href='/clusters/') Overview
                 li: a(href='/clusters/create') Create new cluster
+        .link-group
+            a.title(href='', data-toggle='collapse', data-target='#linkgroup3') File Manager
+            ul.collapse.show#linkgroup3
+                li: a(href='') Cloud store
+        .link-group
+            a.title(href='', data-toggle='collapse', data-target='#linkgroup4') Services
+            ul.collapse.show#linkgroup4
+                li: a(href='/ssh/') SSH
+                li: a(href='/ftp/') FTP
+                li
+                    a(href='', data-toggle='collapse', data-target='#linkgroup-apache') Apache
+                    ul.collapse.collapsed#linkgroup-apache
+                        li: a(href='') Configuration
+                        li: a(href='') Logs
+
+
+        .link-group
+            a.title(href='/account/logout') Logout

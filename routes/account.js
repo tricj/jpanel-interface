@@ -13,6 +13,15 @@ router.get('/login', function(req,res,next) {
     res.render('account/login');
 });
 
+router.get('/manage-users', authentication.isLoggedIn, function(req, res, next) {
+    res.render('account/manage-users');
+});
+
+/* DELETE requests */
+router.delete('/delete-user/:id', authentication.isLoggedIn, function(req, res, next) {
+    // Verify user has permission to do this and delete
+});
+
 passport.use(new LocalStrategy(
     function(username, password, done){
         console.log("=== Attempting login");
@@ -69,7 +78,6 @@ router.post('/change-password', authentication.isLoggedIn, function(req, res, ne
             if(isMatch){
                 User.changePassword(req.user.id, newPassword, function(){
                     userdata.success_msg = 'Password successfully changed';
-                    console.log(">>>>>>>>>>>>>> SUCCESSFUL PASSWORD CHANGE");
                     res.render('account/change-password', userdata);
                 });
             } else {

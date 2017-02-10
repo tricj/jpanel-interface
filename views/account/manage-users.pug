@@ -1,0 +1,107 @@
+extends ../layout
+block javascript
+    script(type='text/javascript', src='/js/dropdown.js')
+    script(type='text/javascript', src='/js/tooltip.js')
+    script(type='text/javascript', src='/js/manage-users.js')
+    script(type='text/javascript', src='https://use.fontawesome.com/c695705283.js')
+block content
+    .content
+        h3 Manage users
+        if errors
+            each e in errors
+                div.alert.alert-danger= e.msg
+        if error_msg != undefined
+            div.alert.alert-danger= error_msg
+        if success_msg != undefined
+            div.alert.alert-success=success_msg
+
+        table.table.table-hover
+            thead
+                tr
+                    td Username
+                    td.text-right
+                        a.fa.fa-plus(data-toggle='modal', data-target='#newUser', title='Add new user', data-tooltip='true')
+            tbody
+                tr
+                    td jb
+                    td.text-right(data-id='test')
+                        a.fa.fa-pencil(data-toggle='modal', data-target='#editUser', title='Modify user', data-tooltip='true', data-id='1')
+                        a.fa.fa-trash(data-toggle='modal', data-target='#deleteUser', title='Delete user', data-tooltip='true', data-id='1')
+                tr
+                    td user
+                    td.text-right(data-id='test2')
+                        a.fa.fa-pencil(data-toggle='modal', data-target='#editUser', title='Modify user', data-tooltip='true', data-id='1')
+                        a.fa.fa-trash(data-toggle='modal', data-target='#deleteUser', title='Delete user', data-tooltip='true', data-id='1')
+
+    .modal.fade(id='newUser', tabindex='-1')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Create a new user
+                    button.close(type='button', data-dismiss='modal', aria-label='close')
+                        span.fa.fa-times(aria-hidden='true')
+                .modal-body
+                    form.form-horizontal(id='newUserForm', action='/account/create-user/', method='post')
+                        .form-group
+                            label.form-control-label(for='username') Username
+                            input.form-control(type='text', id='username', name='username')
+                            hr
+                        .form-group
+                            label.form-control-label(for='password') Password
+                            input.form-control(type='password', id='password', name='password')
+                        .form-group
+                            label.form-control-label(for='confirmPassword') Confirm password
+                            input.form-control(type='password', id='confirmPassword', name='confirmPassword')
+                .modal-footer
+                    button.btn.btn-outline-danger(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='button') Save
+
+    .modal.fade(id='editUser', tabindex='-1')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Edit user
+                    button.close(type='button', data-dismiss='modal', aria-label='close')
+                        span.fa.fa-times(aria-hidden='true')
+                .modal-body
+                    form.form-horizontal(id='changePasswordForm', action='/account/create-user/', method='post')
+                        fieldset
+                            legend Change password
+                            .form-group
+                                label.form-control-label(for='password') New password
+                                input.form-control(type='password', id='newPassword', name='password')
+                            .form-group
+                                label.form-control-label(for='confirmPassword') Confirm new password
+                                input.form-control(type='password', id='confirmNewPassword', name='confirmPassword')
+
+                    form.form-horizontal(id='editPermissionsForm', action='/account/user-permissions/', method='post')
+                        fieldset
+                            legend Modify permissions
+                            table.table.table-hover
+                                thead
+                                    tr
+                                        td(colspan='2') Rule
+                                tbody
+                                    tr
+                                        td Manage users
+                                        td
+                                            input(type='checkbox', id='manageUsers', name='manageUsers')
+                                    tr
+                                        td File manager
+                                        td
+                                            input(type='checkbox', id='fileManager', name='fileManager')
+
+                .modal-footer
+                    button.btn.btn-outline-danger(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='button') Save
+    .modal.fade(id='deleteUser', tabindex='-1')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Delete user
+                .modal-body
+                    p Confirm deletion of user:
+                        span.username
+                .modal-footer
+                    button.btn.btn-outline-danger(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-danger.confirm-delete(type='button') Delete user
