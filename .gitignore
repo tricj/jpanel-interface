@@ -11,5 +11,8 @@ pids
 # IDE
 .idea
 
+# SSL
+ssl/*
+
 # Dependencies
 node_modules

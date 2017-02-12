@@ -16,13 +16,75 @@ hr {
   border-color: $theme-light-alternative;
 }
 
+
+nav.top-nav {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  padding: 5px;
+  background: $theme-light;
+
+  a {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid $theme-highlight;
+    color: $text-normal;
+
+    span {
+      color: inherit;
+    }
+
+    &:last-child{
+      padding-right: 10px;
+      border-right: none;
+    }
+
+    &:hover,
+    &:focus {
+      color: $text-hover;
+    }
+  }
+
+  #notifications-container {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 300px;
+    background: $theme-light;
+    border: 1px solid $theme-highlight;
+    display: none;
+
+    .notification-title {
+      width: 100%;
+      line-height: 30px;
+      font-size: 15px;
+      text-align: center;
+      border-bottom: 1px solid $theme-highlight;
+    }
+    .notification-link {
+      width: 100%;
+      border: none;
+      display: block;
+      padding: 15px;
+      border-bottom: 1px solid $theme-highlight;
+
+      &:hover {
+        background: $theme-light-alternative;
+        text-decoration: none;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
 header {
   position: fixed;
   height: 100%;
   a {
     color: $text-normal;
   }
-
 
   nav.side-nav {
     overflow: auto;

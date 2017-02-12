@@ -5,7 +5,9 @@
  */
 var app     = require('../app');
 //var debug   = require('debug', 'jpi');
-var http    = require('http');
+var https    = require('https');
+var fs       = require('fs');
+var path        = require('path');
 
 /**
  * Port configuration
@@ -14,9 +16,13 @@ var port    = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * HTTP Server
+ * HTTPS Server
  */
-var server  = http.createServer(app);
+const options = {
+    cert: fs.readFileSync(path.join(__dirname, '../ssl', 'jpanel_jamie-bell_me.crt')),
+    key: fs.readFileSync(path.join(__dirname, '../ssl', 'jpanel_jamie-bell_me.key'))
+};
+var server = https.createServer(options, app);
 
 /**
  * Network listeners

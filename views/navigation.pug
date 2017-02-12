@@ -18,7 +18,7 @@ header
                 li: a(href='/account/manage-users/') Manage users
                 li: a(href='/account/change-password/') Change password
         .link-group
-            a.title(href='', data-toggle='collapse', data-target='#linkgroup2') Clusters
+            a.title(href='', data-toggle='collapse', data-target='#linkgroup2') Clusters &amp; nodes
             ul.collapse.show#linkgroup2
                 li: a(href='/clusters/') Overview
                 li: a(href='/clusters/create') Create new cluster
@@ -37,6 +37,12 @@ header
                         li: a(href='') Configuration
                         li: a(href='') Logs
 
-
-        .link-group
-            a.title(href='/account/logout') Logout
+nav.top-nav
+    a.title(href='', id='notifications'): span.fa.fa-bell
+    //-a.title(href=''): span.fa.fa-bell-o
+    #notifications-container
+        .notification-title Unseen notifications
+        .notification-body
+            a.notification-link(href=''): span.notification-message Lost connection to node 'Node A'
+            a.notification-link(href=''): span.notification-message Lost connection to node 'Node C'
+    a.title(href='/account/logout'): span.fa.fa-sign-out
