@@ -51,38 +51,52 @@ nav.top-nav {
     }
   }
 
-
-  #notifications-container {
+  #notifications-wrapper {
     position: absolute;
     top: 35px;
     right: 0;
     width: 300px;
-    background: $theme-light;
-    border: 1px solid $theme-highlight;
-    display: none;
 
-    .notification-title {
-      width: 100%;
-      line-height: 30px;
-      font-size: 15px;
-      text-align: center;
-      border-bottom: 1px solid $theme-highlight;
-    }
-    .notification-link {
-      width: 100%;
-      border: none;
-      display: block;
-      padding: 15px;
-      border-bottom: 1px solid $theme-highlight;
+   #notifications-container {
+     background: $theme-light;
+     border: 1px solid $theme-highlight;
+     display: none;
 
-      &:hover {
-        background: $theme-light-alternative;
-        text-decoration: none;
-      }
-      &:last-child {
-        border-bottom: none;
-      }
-    }
+     .notification-title {
+       width: 100%;
+       line-height: 30px;
+       font-size: 15px;
+       text-align: center;
+       border-bottom: 1px solid $theme-highlight;
+     }
+     .notification-link {
+       width: 100%;
+       border: none;
+       display: block;
+       padding: 15px;
+       border-bottom: 1px solid $theme-highlight;
+
+       &:hover {
+         background: $theme-light-alternative;
+         text-decoration: none;
+       }
+       &:last-child {
+         border-bottom: none;
+       }
+     }
+   }
+
+   #live-notifications {
+     padding-top: 15px;
+     cursor: default;
+
+     .alert {
+       border-radius: 0;
+     }
+     .alert:hover {
+       border-color: $theme-highlight;
+     }
+   }
   }
 }
 

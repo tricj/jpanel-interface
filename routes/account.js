@@ -3,6 +3,8 @@ var User = require('../models/user');
 var authentication = require('../config/passport');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+//var sanitizer = require('sanitizer');
+var validator = require('express-validator');
 
 /* GET requests */
 router.get('/change-password', authentication.isLoggedIn, function(req, res, next){
@@ -15,13 +17,44 @@ router.get('/login', function(req,res,next) {
 
 router.get('/manage-users', authentication.isLoggedIn, function(req, res, next) {
     User.getAllUsers(function(users){
-        res.render('account/manage-users', {"users": users});
+        res.render('account/manage-users', {users: users});
+        // TODO: Only return appropriate information - no password!
     });
 });
 
 /* DELETE requests */
 router.delete('/delete-user/:id', authentication.isLoggedIn, function(req, res, next) {
-    // Verify user has permission to do this and delete
+    // TODO: Permissions
+    // TODO: Logging
+
+    req.checkParams('id', 'ID is not numeric').isNumeric();
+    var id = req.params.id;
+
+    req.getValidationResult().then(function(result){
+       if(!result.isEmpty()){
+           // Validation error(s) occured
+           res.json({
+               success: false,
+               msg: "Failed to delete user. Reason: Validation attempt failed"
+           });
+           return;
+       }
+        User.deleteUser(id, function(success){
+            if(success){
+                // User has been deleted
+                res.json({
+                    success: true,
+                    msg: "Successfully deleted user"
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: "Failed to delete user. Reason: No user found"
+                });
+            }
+        });
+
+    });
 });
 
 passport.use(new LocalStrategy(

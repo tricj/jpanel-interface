@@ -66,3 +66,13 @@ module.exports.getAllUsers = function(callback){
         callback(users);
     });
 };
+
+module.exports.deleteUser = function(id, callback){
+    User.destroy({
+        where: {
+            id: id
+        }
+    }).then(function(e){
+        callback(e);
+    });
+};

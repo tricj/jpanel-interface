@@ -14,7 +14,7 @@ block content
             div.alert.alert-danger= error_msg
         if success_msg != undefined
             div.alert.alert-success=success_msg
-
+        script var users = !{JSON.stringify(users)};
         table.table.table-hover
             thead
                 tr
@@ -97,10 +97,10 @@ block content
         .modal-dialog(role='document')
             .modal-content
                 .modal-header
-                    h5.modal-title Delete user
-                .modal-body
-                    p Confirm deletion of user:
-                        span.username
+                    h5.modal-title Are you sure you want to delete this user?
+                .modal-body.text-center
+                    p The following user will be deleted
+                    p.username
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-danger.confirm-delete(type='button') Delete user
