@@ -60,3 +60,9 @@ module.exports.changePassword = function(userID, newPassword, callback) {
         })
     });
 };
+
+module.exports.getAllUsers = function(callback){
+    User.findAll().then(function(users){
+        callback(users);
+    });
+};

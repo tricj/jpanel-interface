@@ -42,8 +42,15 @@ nav.top-nav {
     &:hover,
     &:focus {
       color: $text-hover;
+      text-decoration: none;
+    }
+
+    .notification-count {
+      line-height: 15px;
+      vertical-align: top;
     }
   }
+
 
   #notifications-container {
     position: absolute;
@@ -226,6 +233,10 @@ a {
 .table {
   td {
     border-top: 1px solid $theme-highlight;
+
+    .badge {
+      margin-right: 15px;
+    }
   }
 
   thead {

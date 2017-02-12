@@ -1,6 +1,6 @@
 $(function(){
     $('td > a.fa-trash').on('click', function(){
-        var id = $(this).parent().closest('td').data('id');
+        var id = $(this).closest('tr').data('id');
         var modal = $('#deleteUser');
 
         modal.find('.username').text(id);
@@ -21,11 +21,13 @@ $(function(){
         // });
 
         $('#deleteUser').modal('hide');
-        $(this).closest('tr').css('background', 'red');
+        $("[data-id='" + id + "']").fadeOut(function(){
+           $(this).remove();
+        });
     });
 
-    $('td > a.fa-pencil').on('click', function(){
-       var id = $(this).parent().closest('td').data('id');
-       alert("ID: " + id);
+    $('td > a.fa-pencil').on('click', function(e){
+       var id = $(this).closest('tr').data('id');
+       alert("id="+id);
     });
 });

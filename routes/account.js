@@ -14,7 +14,9 @@ router.get('/login', function(req,res,next) {
 });
 
 router.get('/manage-users', authentication.isLoggedIn, function(req, res, next) {
-    res.render('account/manage-users');
+    User.getAllUsers(function(users){
+        res.render('account/manage-users', {"users": users});
+    });
 });
 
 /* DELETE requests */
@@ -27,14 +29,14 @@ passport.use(new LocalStrategy(
         console.log("=== Attempting login");
         User.getUserByUsername(username, function(user){
             if(!user){
-                return done(null, false, {message: 'Unknown user'});
+                return done(null, false, {"message": 'Unknown user'});
             }
             User.comparePassword(password, user.password, function(err, isMatch){
                 if(err) throw err;
                 if(isMatch){
                     return done(null, user);
                 } else {
-                    return done(null, false, {message: 'Invalid password'});
+                    return done(null, false, {"message": 'Invalid password'});
                 }
             })
         })

@@ -22,16 +22,15 @@ block content
                     td.text-right
                         a.fa.fa-plus(data-toggle='modal', data-target='#newUser', title='Add new user', data-tooltip='true')
             tbody
-                tr
-                    td jb
-                    td.text-right(data-id='test')
-                        a.fa.fa-pencil(data-toggle='modal', data-target='#editUser', title='Modify user', data-tooltip='true', data-id='1')
-                        a.fa.fa-trash(data-toggle='modal', data-target='#deleteUser', title='Delete user', data-tooltip='true', data-id='1')
-                tr
-                    td user
-                    td.text-right(data-id='test2')
-                        a.fa.fa-pencil(data-toggle='modal', data-target='#editUser', title='Modify user', data-tooltip='true', data-id='1')
-                        a.fa.fa-trash(data-toggle='modal', data-target='#deleteUser', title='Delete user', data-tooltip='true', data-id='1')
+                each user in users
+                    tr(data-id=user.id)
+                        td= user.username
+                        td.text-right
+                            if user.id == 1
+                                span.badge.badge-default Superuser
+                            a.fa.fa-pencil(data-toggle='modal', data-target='#editUser', title='Modify user', data-tooltip='true')
+                            if user.id != 1
+                                a.fa.fa-trash(data-toggle='modal', data-target='#deleteUser', title='Delete user', data-tooltip='true')
 
     .modal.fade(id='newUser', tabindex='-1')
         .modal-dialog(role='document')
@@ -53,7 +52,7 @@ block content
                             label.form-control-label(for='confirmPassword') Confirm password
                             input.form-control(type='password', id='confirmPassword', name='confirmPassword')
                 .modal-footer
-                    button.btn.btn-outline-danger(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-primary(type='button') Save
 
     .modal.fade(id='editUser', tabindex='-1')
@@ -83,16 +82,16 @@ block content
                                         td(colspan='2') Rule
                                 tbody
                                     tr
-                                        td Manage users
+                                        td: label(for='manageUsers') Manage users
                                         td
                                             input(type='checkbox', id='manageUsers', name='manageUsers')
                                     tr
-                                        td File manager
+                                        td: label(for='fileManager') File manager
                                         td
                                             input(type='checkbox', id='fileManager', name='fileManager')
 
                 .modal-footer
-                    button.btn.btn-outline-danger(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-primary(type='button') Save
     .modal.fade(id='deleteUser', tabindex='-1')
         .modal-dialog(role='document')
@@ -103,5 +102,5 @@ block content
                     p Confirm deletion of user:
                         span.username
                 .modal-footer
-                    button.btn.btn-outline-danger(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-danger.confirm-delete(type='button') Delete user
