@@ -68,11 +68,17 @@ module.exports.getAllUsers = function(callback){
 };
 
 module.exports.deleteUser = function(id, callback){
-    User.destroy({
-        where: {
-            id: id
-        }
-    }).then(function(e){
-        callback(e);
-    });
+    // don't allow deletion of user with ID(1). This is the super user
+    if(id != 1) {
+        User.destroy({
+            where: {
+                id: id
+            }
+        }).then(function (e) {
+            callback(e);
+        });
+    } else {
+        // Return a failed attempt at deleting user
+        callback(0);
+    }
 };
