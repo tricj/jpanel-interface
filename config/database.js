@@ -9,5 +9,34 @@ var orm = new Sequelize('jp_interface', 'jp_user', 'Sterl1nG', {
         idle: 1000
     }
 });
+var User = orm.define('user', {
+    username: {
+        type: Sequelize.STRING
+    },
+    password: {
+        type: Sequelize.STRING
+    }
+}, {
+    freezeTableName: true
+});
+var Sessions = orm.define('sessions', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    sid: { type: Sequelize.STRING },
+    data: { type: Sequelize.TEXT },
+    createdAt: { type: Sequelize.DATE },
+    updatedAt: { type: Sequelize.DATE }
 
-module.exports = orm;
+});
+
+User.sync();
+Sessions.sync();
+
+module.exports = {
+    orm: orm,
+    User: User,
+    Sessions: Sessions
+};

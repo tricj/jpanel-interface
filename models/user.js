@@ -1,19 +1,6 @@
-var Sequelize   = require('sequelize');
-var orm = require('../config/database');
+var database = require('../config/database');
 var bcrypt      = require('bcryptjs');
-
-var User = orm.define('user', {
-    username: {
-        type: Sequelize.STRING
-    },
-    password: {
-        type: Sequelize.STRING
-    }
-}, {
-    freezeTableName: true
-});
-
-module.exports = User;
+var User = database.User;
 
 module.exports.hashPassword = function(user, callback) {
     bcrypt.genSalt(10, function(err,salt){

@@ -28,7 +28,7 @@ app.use(cookieParser());
 /*
  * Configure database
  */
-var orm = require('./config/database');
+var database = require('./config/database');
 var Store = require('express-sequelize-session')(session.Store);
 
 /*
@@ -37,7 +37,7 @@ var Store = require('express-sequelize-session')(session.Store);
 app.use(session({
     name: 'sid',
     secret: '20170204140147', // Random secret key
-    store: new Store(orm),
+    store: new Store(database.orm),
     saveUninitialized: true,
     resave: false
 }));
