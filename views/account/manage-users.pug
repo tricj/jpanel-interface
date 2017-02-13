@@ -10,9 +10,9 @@ block content
         if errors
             each e in errors
                 div.alert.alert-danger= e.msg
-        if error_msg != undefined
+        if error_msg.length > 0
             div.alert.alert-danger= error_msg
-        if success_msg != undefined
+        if success_msg.length > 0
             div.alert.alert-success=success_msg
         script var users = !{JSON.stringify(users)};
         table.table.table-hover

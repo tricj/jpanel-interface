@@ -10,8 +10,8 @@ html(lang='en')
                 hr
                 form#login.form-horizontal.col-6.offset-3(action='/account/login', method='post')
                     h4 Please login to continue
-                    if error.length > 0
-                        div.alert.alert-danger= error
+                    if error_msg.length > 0
+                        div.alert.alert-danger= error_msg
                     .form-group
                         label.form-control-label(for='username') Username
                         input#username.form-control(type='text', name='username')

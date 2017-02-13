@@ -19,12 +19,27 @@ var express     = require('express'),
 var app = express();
 
 /*
+ * Configure Parsers
+ */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+
+/*
+ * Configure database
+ */
+var orm = require('./config/database');
+var Store = require('express-sequelize-session')(session.Store);
+
+/*
  * Configure express session
  */
 app.use(session({
+    name: 'sid',
     secret: '20170204140147', // Random secret key
+    store: new Store(orm),
     saveUninitialized: true,
-    resave: true
+    resave: false
 }));
 
 /*
@@ -65,6 +80,8 @@ app.use(flash());
 app.use(function(req,res,next) {
     // Passport errors
     res.locals.error        = req.flash('error');
+    res.locals.error_msg    = req.flash('error_msg');
+    res.locals.success_msg  = req.flash('success_msg');
     // User
     res.locals.user         = req.user || null;
     next();
@@ -74,13 +91,6 @@ app.use(function(req,res,next) {
  * Logging configuration
  */
 app.use(logger('dev'));
-
-/*
- * Configure BodyParser
- */
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 
 /**
   * TESTING DATABASE
