@@ -3,17 +3,14 @@
 /**
  * Dependencies
  */
-var app     = require('../app');
-//var debug   = require('debug', 'jpi');
-var https    = require('https');
-var fs       = require('fs');
-var path        = require('path');
+var express = require('express'),
+    app     = require('../app');
 
-/**
- * Port configuration
- */
-var port    = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+var http  = require('http'),
+    https = require('https');
+
+var fs       = require('fs'),
+    path        = require('path');
 
 /**
  * HTTPS Server
@@ -25,73 +22,20 @@ const options = {
 var server = https.createServer(options, app);
 
 /**
- * Network listeners
+ * Network listener
  */
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+server.listen(443);
 
 /**
- * Normalize port function
+ * HTTP auto-redirect
  */
-function normalizePort(v)
-{
-    var port = parseInt(v, 10);
-
-    if (isNaN(port))
-    {
-        // named pipe
-        return v;
-    }
-
-    if (port >= 0)
-    {
-        // port number
-        return port;
-    }
-
-    return false;
-}
-
-/**
- * Event listener for HTTP errors
- */
-function onError(e)
-{
-    if (e.syscall !== 'listen')
-    {
-        throw e;
-    }
-
-    var bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-
-    // Handle specific errors
-    switch(e.code)
-    {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use by another process');
-            process.exit(1);
-            break;
-        default:
-            throw e;
-
-    }
-}
-
-/**
- * Event listener for HTTP port listening
- */
-function onListening()
-{
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    console.log('Listening on ' + bind);
-}
+// TODO: Optional HTTP listener - Disable if using load balancer to handle this
+http.createServer(function(req, res){
+    res.writeHead(301, {
+        Location: "https://"
+        + req.headers.host
+        + ""
+        + req.url
+    });
+    res.end();
+}).listen(80);
