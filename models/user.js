@@ -18,14 +18,18 @@ module.exports.createUser = function(user) {
 };
 
 module.exports.getUserByUsername = function(username, callback) {
-    Users.findOne({where: { username: username}}).then(function(user){
-        callback(user)
+    Users.sync().then(function(){
+        Users.findOne({where: { username: username}}).then(function(user){
+            callback(user)
+        });
     });
 };
 
 module.exports.getUserById = function(id, callback) {
-    Users.findOne({where: { id: id}}).then(function(user){
-        callback(user);
+    Users.sync().then(function(){
+        Users.findOne({where: { id: id}}).then(function(user){
+            callback(user);
+        })
     });
 };
 
@@ -47,8 +51,10 @@ module.exports.changePassword = function(userID, newPassword, callback) {
 };
 
 module.exports.getAllUsers = function(callback){
-    Users.findAll().then(function(users){
-        callback(users);
+    Users.sync().then(function(){
+        Users.findAll().then(function(users){
+            callback(users);
+        })
     });
 };
 

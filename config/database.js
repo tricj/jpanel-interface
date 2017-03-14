@@ -1,4 +1,4 @@
-var Sequelize   = require('sequelize');
+var Sequelize = require('sequelize');
 
 function logDatabaseAction(query){
     console.log("> " + query);
@@ -14,105 +14,89 @@ var orm = new Sequelize('jp_interface', 'jp_user', 'Sterl1nG', {
     }
     //,logging: logDatabaseAction
 });
-
-var Users = orm.define('users', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    username: {
-        type: Sequelize.STRING,
-        unique: true
-    },
-    password: { type:   Sequelize.STRING },
-    createdAt: { type:  Sequelize.DATE },
-    updatedAt: { type:  Sequelize.DATE }
-});
-
-var Sessions = orm.define('sessions', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    sid: { type:        Sequelize.STRING },
-    data: { type:       Sequelize.TEXT },
-    createdAt: { type:  Sequelize.DATE },
-    updatedAt: { type:  Sequelize.DATE }
-});
-
-var Clusters = orm.define('clusters', {
-    id: {
-       type:            Sequelize.INTEGER,
-       autoIncrement:   true,
-       primaryKey:      true
-    },
-    name: {
-        type: Sequelize.STRING,
-        unique: true
-    },
-    description: {  type: Sequelize.TEXT },
-    createdAt: {    type: Sequelize.DATE },
-    updatedAt: {    type: Sequelize.DATE }
-});
-
-var Log = orm.define('log', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    entry: { type: Sequelize.TEXT },
-    createdAt: { type: Sequelize.DATE },
-    userId: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: Users,
-            key: "id"
-        }
-    }
-});
-
-var Nodes = orm.define('nodes', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    name: {
-        type: Sequelize.STRING,
-        unique: true
-    },
-    hostname: {
-        type: Sequelize.STRING,
-        unique: true
-    },
-    username: {
-        type: Sequelize.STRING
-    },
-    privateKey: {type: Sequelize.TEXT },
-    createdAt: { type: Sequelize.DATE },
-    updatedAt: { type: Sequelize.DATE },
-    clusterId: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: Clusters,
-            key: "id"
-        }
-    }
-});
-
-Users.sync();
-Sessions.sync();
-Log.sync();
-Clusters.sync();
-Nodes.sync();
-
 module.exports = {
     orm: orm,
-    Users: Users,
-    Sessions: Sessions,
-    Log: Log,
-    Nodes: Nodes
+    Users : orm.define('users', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        username: {
+            type: Sequelize.STRING,
+            unique: true
+        },
+        password: {type: Sequelize.STRING},
+        createdAt: {type: Sequelize.DATE},
+        updatedAt: {type: Sequelize.DATE}
+    }),
+    Sessions : orm.define('sessions', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        sid: {type: Sequelize.STRING},
+        data: {type: Sequelize.TEXT},
+        createdAt: {type: Sequelize.DATE},
+        updatedAt: {type: Sequelize.DATE}
+    }),
+    Clusters : orm.define('clusters', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        masterNode: {
+            type: Sequelize.INTEGER
+        },
+        name: {
+            type: Sequelize.STRING,
+            unique: true
+        },
+        description: {type: Sequelize.TEXT},
+        createdAt: {type: Sequelize.DATE},
+        updatedAt: {type: Sequelize.DATE}
+    }),
+    Log : orm.define('logs', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        entry: {type: Sequelize.TEXT},
+        createdAt: {type: Sequelize.DATE},
+        userId: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: "users",
+                key: "id"
+            }
+        }
+    }),
+    Nodes : orm.define('nodes', {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        name: {
+            type: Sequelize.STRING,
+            unique: true
+        },
+        hostname: {
+            type: Sequelize.STRING,
+            unique: true
+        },
+        username: {
+            type: Sequelize.STRING
+        },
+        privateKey: {type: Sequelize.TEXT},
+        isMaster: {
+            type: Sequelize.BOOLEAN,
+            default: false
+        },
+        createdAt: {type: Sequelize.DATE},
+        updatedAt: {type: Sequelize.DATE}
+    })
 };
