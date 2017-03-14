@@ -88,6 +88,9 @@ var Nodes = orm.define('nodes', {
         type: Sequelize.STRING,
         unique: true
     },
+    username: {
+        type: Sequelize.STRING
+    },
     privateKey: {type: Sequelize.TEXT },
     createdAt: { type: Sequelize.DATE },
     updatedAt: { type: Sequelize.DATE },
@@ -110,5 +113,6 @@ module.exports = {
     orm: orm,
     Users: Users,
     Sessions: Sessions,
-    Log: Log
+    Log: Log,
+    Nodes: Nodes
 };

@@ -11,7 +11,7 @@ module.exports.hashPassword = function(user, callback) {
     });
 };
 
-module.exports.createUser = function(user, callback) {
+module.exports.createUser = function(user) {
     this.hashPassword(user, function(){
         return Users.create(user);
     });

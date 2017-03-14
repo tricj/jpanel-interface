@@ -95,11 +95,33 @@ app.use(logger('dev'));
   * TESTING DATABASE
  */
 
-var User = require('./models/user');
-User.createUser({
-    username: 'jb',
-    password: 'pass'
+// var User = require('./models/user');
+// User.createUser({
+//     username: 'jb',
+//     password: 'pass'
+// });
+
+/**
+ * TESTING NODE CREATION
+ */
+var Node = require('./models/node');
+// Node.createNode({
+//     name: 'jira',
+//     hostname: '52.56.79.136',
+//     username: 'ubuntu',
+//     privateKey: 'C:\\Users\\Jay\\Google Drive\\Uni\\Year 3 resit\\dissertation\\.ssh\\ldn-aws-openssh.key'
+// });
+
+Node.getNodeById(1, function(n){
+    console.log("Node found: " + JSON.stringify(n));
 });
+
+
+/**
+ * TESTING SSH CONNECTION
+ */
+//var ssh = require('./config/ssh');
+
 
 /** END OF TESTING */
 
