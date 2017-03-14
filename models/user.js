@@ -1,8 +1,8 @@
 var database = require('../config/database');
 var bcrypt      = require('bcryptjs');
-var User = database.User;
+var Users = database.Users;
 
-var hashPassword = function(user, callback) {
+module.exports.hashPassword = function(user, callback) {
     bcrypt.genSalt(10, function(err,salt){
         bcrypt.hash(user.password, salt, function(err, hash){
             user.password = hash;
@@ -11,24 +11,20 @@ var hashPassword = function(user, callback) {
     });
 };
 
-module.exports = hashPassword;
-
 module.exports.createUser = function(user, callback) {
-    hashPassword(user, function(){
-        User.sync().then(function(){
-            return User.create(user)
-        });
+    this.hashPassword(user, function(){
+        return Users.create(user);
     });
 };
 
 module.exports.getUserByUsername = function(username, callback) {
-    User.findOne({where: { username: username}}).then(function(user){
+    Users.findOne({where: { username: username}}).then(function(user){
         callback(user)
     });
 };
 
 module.exports.getUserById = function(id, callback) {
-    User.findOne({where: { id: id}}).then(function(user){
+    Users.findOne({where: { id: id}}).then(function(user){
         callback(user);
     });
 };
@@ -43,7 +39,7 @@ module.exports.comparePassword = function(inputPassword, hash, callback){
 module.exports.changePassword = function(userID, newPassword, callback) {
     bcrypt.genSalt(10, function(err, salt){
         bcrypt.hash(newPassword, salt, function(err, hash){
-            User.findOne({where: {id: userID}}).then(function(user){
+            Users.findOne({where: {id: userID}}).then(function(user){
                 user.set("password", hash).save().then(callback());
             });
         })
@@ -51,7 +47,7 @@ module.exports.changePassword = function(userID, newPassword, callback) {
 };
 
 module.exports.getAllUsers = function(callback){
-    User.findAll().then(function(users){
+    Users.findAll().then(function(users){
         callback(users);
     });
 };
@@ -59,7 +55,7 @@ module.exports.getAllUsers = function(callback){
 module.exports.deleteUser = function(id, callback){
     // don't allow deletion of user with ID(1). This is the super user
     if(id != 1) {
-        User.destroy({
+        Users.destroy({
             where: {
                 id: id
             }

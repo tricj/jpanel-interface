@@ -96,15 +96,9 @@ app.use(logger('dev'));
  */
 
 var User = require('./models/user');
-
-var newUser = {
-    username: 'test-user',
+User.createUser({
+    username: 'jb',
     password: 'pass'
-};
-
-User.createUser(newUser, function(err, user){
-    if(err) throw err;
-    console.log("Callback: " + JSON.stringify(newUser));
 });
 
 /** END OF TESTING */

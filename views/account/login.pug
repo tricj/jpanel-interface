@@ -4,11 +4,11 @@ html(lang='en')
         include ../header
     body
         .container-fluid
-            .index-content.col-8.offset-2
+            .index-content.col-md-8.offset-md-2
                 .display-3 Welcome to JPanel
                 small The simple cloud control panel
                 hr
-                form#login.form-horizontal.col-6.offset-3(action='/account/login', method='post')
+                form#login.form-horizontal.col-12(action='/account/login', method='post')
                     h4 Please login to continue
                     if error_msg.length > 0
                         div.alert.alert-danger= error_msg

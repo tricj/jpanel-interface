@@ -11,11 +11,11 @@ var orm = new Sequelize('jp_interface', 'jp_user', 'Sterl1nG', {
         max: 5,
         min: 0,
         idle: 1000
-    },
-    logging: logDatabaseAction
+    }
+    //,logging: logDatabaseAction
 });
 
-var User = orm.define('user', {
+var Users = orm.define('users', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -25,9 +25,8 @@ var User = orm.define('user', {
     password: { type:   Sequelize.STRING },
     createdAt: { type:  Sequelize.DATE },
     updatedAt: { type:  Sequelize.DATE }
-}, {
-    freezeTableName: true
 });
+
 var Sessions = orm.define('sessions', {
     id: {
         type: Sequelize.INTEGER,
@@ -39,6 +38,7 @@ var Sessions = orm.define('sessions', {
     createdAt: { type:  Sequelize.DATE },
     updatedAt: { type:  Sequelize.DATE }
 });
+
 var Clusters = orm.define('clusters', {
     id: {
        type:            Sequelize.INTEGER,
@@ -50,6 +50,7 @@ var Clusters = orm.define('clusters', {
     createdAt: {    type: Sequelize.DATE },
     updatedAt: {    type: Sequelize.DATE }
 });
+
 var Log = orm.define('log', {
     id: {
         type: Sequelize.INTEGER,
@@ -61,11 +62,12 @@ var Log = orm.define('log', {
     userId: {
         type: Sequelize.INTEGER,
         references: {
-            model: User,
+            model: Users,
             key: "id"
         }
     }
 });
+
 var Nodes = orm.define('nodes', {
     id: {
         type: Sequelize.INTEGER,
@@ -86,7 +88,7 @@ var Nodes = orm.define('nodes', {
     }
 });
 
-User.sync();
+Users.sync();
 Sessions.sync();
 Log.sync();
 Clusters.sync();
@@ -94,7 +96,7 @@ Nodes.sync();
 
 module.exports = {
     orm: orm,
-    User: User,
+    Users: Users,
     Sessions: Sessions,
     Log: Log
 };
