@@ -4,7 +4,9 @@
   "private": true,
   "description": "Interface for dissertation project",
   "repository": "https://github.com/tricj/jpanel-interface",
-  "devDependencies": {},
+  "devDependencies": {
+    "node-ssh": "^4.0.1"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.16.0",

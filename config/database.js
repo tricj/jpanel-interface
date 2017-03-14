@@ -21,7 +21,10 @@ var Users = orm.define('users', {
         autoIncrement: true,
         primaryKey: true
     },
-    username: { type:   Sequelize.STRING },
+    username: {
+        type: Sequelize.STRING,
+        unique: true
+    },
     password: { type:   Sequelize.STRING },
     createdAt: { type:  Sequelize.DATE },
     updatedAt: { type:  Sequelize.DATE }
@@ -45,7 +48,10 @@ var Clusters = orm.define('clusters', {
        autoIncrement:   true,
        primaryKey:      true
     },
-    name: {         type: Sequelize.STRING },
+    name: {
+        type: Sequelize.STRING,
+        unique: true
+    },
     description: {  type: Sequelize.TEXT },
     createdAt: {    type: Sequelize.DATE },
     updatedAt: {    type: Sequelize.DATE }
@@ -57,7 +63,7 @@ var Log = orm.define('log', {
         autoIncrement: true,
         primaryKey: true
     },
-    line: { type: Sequelize.TEXT },
+    entry: { type: Sequelize.TEXT },
     createdAt: { type: Sequelize.DATE },
     userId: {
         type: Sequelize.INTEGER,
@@ -74,8 +80,14 @@ var Nodes = orm.define('nodes', {
         autoIncrement: true,
         primaryKey: true
     },
-    name: { type: Sequelize.STRING },
-    hostname: {type: Sequelize.STRING },
+    name: {
+        type: Sequelize.STRING,
+        unique: true
+    },
+    hostname: {
+        type: Sequelize.STRING,
+        unique: true
+    },
     privateKey: {type: Sequelize.TEXT },
     createdAt: { type: Sequelize.DATE },
     updatedAt: { type: Sequelize.DATE },
