@@ -1,7 +1,7 @@
 var router = require('express').Router();
 var authentication = require('../config/passport');
 
-router.get('/', authentication.isLoggedIn, function(req, res, next) {
+router.get('/', authentication.requireLogin, function(req, res, next) {
     res.render('dashboard');
 });
 

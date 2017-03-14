@@ -2,7 +2,7 @@ var database = require('../config/database');
 var bcrypt      = require('bcryptjs');
 var User = database.User;
 
-module.exports.hashPassword = function(user, callback) {
+var hashPassword = function(user, callback) {
     bcrypt.genSalt(10, function(err,salt){
         bcrypt.hash(user.password, salt, function(err, hash){
             user.password = hash;
@@ -11,8 +11,10 @@ module.exports.hashPassword = function(user, callback) {
     });
 };
 
+module.exports = hashPassword;
+
 module.exports.createUser = function(user, callback) {
-    User.hashPassword(user, function(){
+    hashPassword(user, function(){
         User.sync().then(function(){
             return User.create(user)
         });

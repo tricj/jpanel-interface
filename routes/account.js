@@ -7,7 +7,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var validator = require('express-validator');
 
 /* GET requests */
-router.get('/change-password', authentication.isLoggedIn, function(req, res, next){
+router.get('/change-password', authentication.requireLogin, function(req, res, next){
     res.render('account/change-password');
 });
 
@@ -15,7 +15,7 @@ router.get('/login', function(req,res,next) {
     res.render('account/login');
 });
 
-router.get('/manage-users', authentication.isLoggedIn, function(req, res, next) {
+router.get('/manage-users', authentication.requireLogin, function(req, res, next) {
     User.getAllUsers(function(users){
         res.render('account/manage-users', {users: users});
         // TODO: Only return appropriate information - no password!
@@ -23,7 +23,7 @@ router.get('/manage-users', authentication.isLoggedIn, function(req, res, next) 
 });
 
 /* DELETE requests */
-router.delete('/delete-user/:id', authentication.isLoggedIn, function(req, res, next) {
+router.delete('/delete-user/:id', authentication.requireLogin, function(req, res, next) {
     // TODO: Permissions
     // TODO: Logging
 
@@ -86,13 +86,13 @@ passport.deserializeUser(function(id, done){
     });
 });
 
-router.get('/logout', authentication.isLoggedIn, function(req,res,next) {
+router.get('/logout', authentication.requireLogin, function(req, res, next) {
    req.logout();
    res.redirect('/');
 });
 
 /* POST requests */
-router.post('/change-password', authentication.isLoggedIn, function(req, res, next){
+router.post('/change-password', authentication.requireLogin, function(req, res, next){
     console.log("changing password");
     var currentPassword = req.body.currentPassword;
     var newPassword = req.body.newPassword;
