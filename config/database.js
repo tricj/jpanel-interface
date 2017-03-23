@@ -34,7 +34,7 @@ module.exports = {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
-            primaryKey: true,
+            primaryKey: true
         },
         sid: {type: Sequelize.STRING},
         data: {type: Sequelize.TEXT},
@@ -48,7 +48,8 @@ module.exports = {
             primaryKey: true
         },
         masterNode: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            defaultValue: null
         },
         name: {
             type: Sequelize.STRING,
@@ -58,7 +59,7 @@ module.exports = {
         createdAt: {type: Sequelize.DATE},
         updatedAt: {type: Sequelize.DATE}
     }),
-    Log : orm.define('logs', {
+    Logs : orm.define('logs', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -88,10 +89,15 @@ module.exports = {
             type: Sequelize.STRING,
             unique: true
         },
+        clusterId: {
+            type: Sequelize.INTEGER
+        },
         username: {
             type: Sequelize.STRING
         },
-        privateKey: {type: Sequelize.TEXT},
+        privateKey: {
+            type: Sequelize.TEXT
+        },
         isMaster: {
             type: Sequelize.BOOLEAN,
             default: false

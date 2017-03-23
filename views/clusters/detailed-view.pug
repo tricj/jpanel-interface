@@ -1,0 +1,69 @@
+extends ../layout
+block javascript
+    script(type='text/javascript', src='/js/dropdown.js')
+    script(type='text/javascript', src='https://use.fontawesome.com/c695705283.js')
+block content
+    .content
+        h3= cluster.name
+        small= cluster.description
+        br
+        small: a(href='#') < Overview
+        hr
+        div
+            form
+                input.form-control(type='text', placeholder='Filter results')
+        hr
+        table.table.table-hover
+            thead
+                tr
+                    td Node
+                    td.text-right
+                        a.fa.fa-plus(title='Attach a node',data-toggle='modal', data-target='#attachNode', data-tooltip='true')
+            tbody
+                tr
+                    td Master node
+                    td.text-right
+                        span.badge.badge-default Master Node
+                        a.fa.fa-pencil(data-toggle='modal', data-target='#editUser', title='Modify user', data-tooltip='true')
+                        a.fa.fa-trash(data-toggle='modal', data-target='#deleteUser', title='Delete user', data-tooltip='true')
+                tr
+                    td Slave node
+                    td.text-right
+                        a.fa.fa-pencil(data-toggle='modal', data-target='#editUser', title='Modify user', data-tooltip='true')
+                        a.fa.fa-trash(data-toggle='modal', data-target='#deleteUser', title='Delete user', data-tooltip='true')
+
+    .modal.fade(id='attachNode', tabindex='-1')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Attach node to cluster
+                    button.close(type='button', data-dismiss='modal', aria-label='close')
+                        span.fa.fa-times(aria-hidden='true')
+                .modal-body
+                    form.form-horizontal(id='newUserForm', action='/account/create-user/', method='post')
+                        .form-group
+                            p Attach exising node
+                            .btn-group.col-12
+                                //- TODO: style select
+                                select.form-control.custom-select-sm
+                                    option A
+                                    option B
+                                button.btn.btn-outline-success(type='button') Continue
+                            hr
+                        .form-group
+                            p Add new node
+                            label.form-control-label(for='name') Name
+                            input.form-control(type='text', id='name', name='name')
+                        .form-group
+                            label.form-control-label(for='hostname') Hostname
+                            input.form-control(type='text', id='hostname', name='hostname')
+                        .form-group
+                            label.form-control-label(for='username') Username
+                            input.form-control(type='text', id='username', name='username')
+                        .form-group
+                            label.form-control-label(for='privateKey') Private key
+                            input.form-control(type='file', id='privateKey', name='privateKey')
+                        .form-group.text-right
+                            button.btn.btn-primary(type='submit') Add node
+                .modal-footer
+                    button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
