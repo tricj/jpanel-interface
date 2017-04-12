@@ -3,7 +3,9 @@ var clusters = require('../models/cluster');
 var nodes = require('../models/node');
 
 router.get('/', function(req, res, next){
-    res.render('clusters/overview');
+    clusters.getAllClusters(function(clusters){
+        res.render('clusters/overview', {clusters: clusters});
+    });
 });
 
 router.get('/create', function(req, res, next){

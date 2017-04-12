@@ -221,6 +221,15 @@ header {
   width: 100%;
   height: 100%;
 
+  pre {
+    color: black;
+    background: aqua;
+    border: 1px solid aquamarine;
+    padding: 10px;
+  }
+
+
+
 
   #clusterChart {
     width: 100%;
@@ -258,6 +267,11 @@ a {
   }
 
   a {
+    color: $text-normal;
+    &:hover {
+      color: $text-hover;
+      text-decoration: none;
+    }
     &.fa {
       margin-right: 15px;
     }

@@ -1,7 +1,6 @@
 extends ../layout
 block javascript
     script(type='text/javascript', src='/js/dropdown.js')
-    script(type='text/javascript', src='/js/tooltip.js')
     script(type='text/javascript', src='/js/manage-users.js')
     script(type='text/javascript', src='https://use.fontawesome.com/c695705283.js')
 block content
@@ -53,7 +52,7 @@ block content
                             input.form-control(type='password', id='confirmPassword', name='confirmPassword')
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
-                    button.btn.btn-primary(type='button') Save
+                    button.btn.btn-primary.submit(type='button') Save
 
     .modal.fade(id='editUser', tabindex='-1')
         .modal-dialog(role='document')

@@ -8,6 +8,31 @@ $(function(){
         modal.find('.confirm-delete').data('id', id);
     });
 
+    function createUser(e){
+        e.preventDefault();
+        // Validate input
+        displayLiveNotification("Creating user");
+
+        $.ajax({
+            url: '/account/create-user',
+            type: 'POST',
+            data: $('#newUserForm').serialize(),
+            success: function(r){
+                if(r.success) {
+                    displayLiveNotification(r.msg, "success");
+                }
+                else { displayLiveNotification(r.msg, "error"); }
+            }, error: function(r){
+                displayLiveNotification(r, "error");
+            }
+        });
+        $('#newUser').modal('hide');
+    };
+
+    $('#newUserForm').on('submit', createUser);
+
+    $('#newUser .submit').on('click', createUser);
+
     $('#deleteUser .confirm-delete').on('click', function(e){
         var id = $(this).data('id');
         var user = getUserByID(id);

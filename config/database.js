@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 function logDatabaseAction(query){
-    console.log("> " + query);
+    //console.log("> " + query);
 }
 
 var orm = new Sequelize('jp_interface', 'jp_user', 'Sterl1nG', {
@@ -12,7 +12,7 @@ var orm = new Sequelize('jp_interface', 'jp_user', 'Sterl1nG', {
         min: 0,
         idle: 1000
     }
-    //,logging: logDatabaseAction
+    ,logging: logDatabaseAction
 });
 module.exports = {
     orm: orm,

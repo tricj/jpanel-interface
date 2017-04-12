@@ -2,9 +2,27 @@ extends ../layout
 block javascript
     script(type='text/javascript', src='/js/dropdown.js')
     script(type='text/javascript', src='https://use.fontawesome.com/c695705283.js')
-    script(type='text/javascript', src='/modules/vis/dist/vis.js')
-    script(type='text/javascript', src='/js/cluster-chart.js')
+    //script(type='text/javascript', src='/modules/vis/dist/vis.js')
+    //script(type='text/javascript', src='/js/cluster-chart.js')
 block content
     .content
         h3 Clusters
-        #clusterChart
+        div
+            form
+                input.form-control(type='text', placeholder='Filter results')
+                // TODO: filter results
+        hr
+        table.table.table-hover
+            thead
+                tr
+                    td Cluster
+                    td.text-right
+                        a.fa.fa-plus(title='Attach a node',data-toggle='modal', data-target='#attachNode', data-tooltip='true')
+                        // TODO: change to cluster form
+            tbody
+                each cluster in clusters
+                    tr(data-id=cluster.id)
+                        td: a(href='view/' + cluster.id)= cluster.name
+                        td.text-right
+                            a.fa.fa-pencil(data-toggle='modal', data-target='#editCluster', title='Modify cluster', data-tooltip='true')
+                            a.fa.fa-trash(data-toggle='modal', data-target='#deleteCluster', title='Delete cluster', data-tooltip='true')

@@ -16,7 +16,7 @@ module.exports.getNodeById = function(id, callback){
 
 module.exports.getNodesByCluster = function(clusterId, callback){
     Nodes.sync().then(function(){
-        Nodes.find({where: { clusterId: clusterId}}).then(function(nodes){
+        Nodes.findAll({where: { clusterId: clusterId}}).then(function(nodes){
             callback(nodes);
         });
     });

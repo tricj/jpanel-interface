@@ -92,6 +92,20 @@ router.get('/logout', authentication.requireLogin, function(req, res, next) {
 });
 
 /* POST requests */
+router.post('/create-user', authentication.requireLogin, function(req,res,next){
+    console.log("created new user");
+    var username = req.body.username;
+    var password = req.body.password;
+    var confirmPassword = req.body.confirmPassword;
+
+    // TODO: Check validation
+
+    User.createUser({
+        username: username,
+        password: password
+    });
+});
+
 router.post('/change-password', authentication.requireLogin, function(req, res, next){
     console.log("changing password");
     var currentPassword = req.body.currentPassword;

@@ -7,6 +7,14 @@ module.exports.createCluster = function(node, callback){
     // todo: callback
 };
 
+module.exports.getAllClusters = function(callback){
+    Clusters.sync().then(function(){
+        Clusters.findAll().then(function(clusters){
+            callback(clusters);
+        });
+    });
+};
+
 module.exports.getClusterById = function(id, callback){
     Clusters.sync().then(function(){
         Clusters.findById(id).then(function(node){
