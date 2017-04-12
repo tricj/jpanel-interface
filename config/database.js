@@ -5,7 +5,7 @@ function logDatabaseAction(query){
 }
 
 var orm = new Sequelize('jp_interface', 'jp_user', 'Sterl1nG', {
-    host: 'localhost',
+    host: '127.0.0.1',
     dialect: 'mariadb',
     pool: {
         max: 5,

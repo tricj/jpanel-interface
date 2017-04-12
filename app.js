@@ -113,7 +113,7 @@ database.orm.sync({force: false}).then(function(){
     //     username: 'ubuntu',
     //     privateKey: 'C:\\Users\\Jay\\Google Drive\\Uni\\Year 3 resit\\dissertation\\.ssh\\ldn-aws-openssh.key'
     // });
-
+    //
     // Node.getNodeById(1, function(n){
     //     console.log("Node found: " + JSON.stringify(n));
     // });
