@@ -21,7 +21,7 @@ block content
                     td Node
                     td Hostname
                     td.text-right
-                        a.fa.fa-plus(title='Attach a node',data-toggle='modal', data-target='#attachNode', data-tooltip='true')
+                        a.fa.fa-plus(title='Create a new node', data-toggle='modal', data-target='#createNode', data-tooltip='true', data-placement='left')
             tbody
                 each node in nodes
                     tr(data-id=node.id)
@@ -33,26 +33,18 @@ block content
                             a.fa.fa-pencil(data-toggle='modal', data-target='#editNode', title='Modify node', data-tooltip='true')
                             a.fa.fa-trash(data-toggle='modal', data-target='#deleteNode', title='Delete node', data-tooltip='true')
 
-    .modal.fade(id='attachNode', tabindex='-1')
+
+    .modal.fade(id='createNode', tabindex='-1')
         .modal-dialog(role='document')
             .modal-content
                 .modal-header
-                    h5.modal-title Attach node to cluster
+                    h5.modal-title Create a new node
                     button.close(type='button', data-dismiss='modal', aria-label='close')
-                        span.fa.fa-times(aria-hidden='true')
+                        span.fa.fa-times-circle(aria-hidden='true')
                 .modal-body
-                    form.form-horizontal(id='newUserForm', action='/account/create-user/', method='post')
+                    form.form-horizontal(id='createNodeForm', action='/clusters/create-node', method='post')
+                        input(type='hidden', id='createNodeClusterID', name='clusterID', value='')
                         .form-group
-                            p Attach exising node
-                            .btn-group.col-12
-                                //- TODO: style select
-                                select.form-control.custom-select-sm
-                                    option A
-                                    option B
-                                button.btn.btn-outline-success(type='button') Continue
-                            hr
-                        .form-group
-                            p Add new node
                             label.form-control-label(for='name') Name
                             input.form-control(type='text', id='name', name='name')
                         .form-group
@@ -63,21 +55,19 @@ block content
                             input.form-control(type='text', id='username', name='username')
                         .form-group
                             label.form-control-label(for='privateKey') Private key
-                            input.form-control(type='file', id='privateKey', name='privateKey')
-                        .form-group.text-right
-                            button.btn.btn-primary(type='submit') Add node
+                            textarea.form-control(id='privateKey', name='privateKey')
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
-
+                    button.btn.btn-primary(type='button') Create new node
     .modal.fade(id='editNode', tabindex='-1')
         .modal-dialog(role='document')
             .modal-content
                 .modal-header
                     h5.modal-title Edit node
                     button.close(type='button', data-dismiss='modal', aria-label='close')
-                        span.fa.fa-times(aria-hidden='true')
+                        span.fa.fa-times-circle(aria-hidden='true')
                 .modal-body
-
+                    // TODO
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-primary(type='button') Save
@@ -86,10 +76,10 @@ block content
         .modal-dialog(role='document')
             .modal-content
                 .modal-header
-                    h5.modal-title Are you sure you want to delete this user?
+                    h5.modal-title Are you sure you want to delete this node?
                 .modal-body.text-center
-                    p The following user will be deleted
-                    p.username
+                    p The following node will be deleted
+                    p.node
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
-                    button.btn.btn-danger.confirm-delete(type='button') Delete user
+                    button.btn.btn-danger.confirm-delete(type='button') Delete node

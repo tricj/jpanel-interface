@@ -228,8 +228,15 @@ header {
     padding: 10px;
   }
 
-
-
+  small {
+    color: $text-normal;
+    a {
+      color: inherit;
+      &:hover {
+        color: $text-hover;
+      }
+    }
+  }
 
   #clusterChart {
     width: 100%;

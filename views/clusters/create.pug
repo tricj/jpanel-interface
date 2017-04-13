@@ -5,14 +5,16 @@ block javascript
 block content
     .content
         h3 Create a new cluster
+        small: a(href='/clusters') < Overview
+        hr
         form#createCluster.form-horizontal(action='/clusters/create', method='post')
             .form-group
                 label.form-control-label(for='name') Name
                 input#name.form-control(type='text', name='name')
-                small.form-text.text-muted Name your cluster
+                small.form-text Name your cluster
             .form-group
                 label.form-control-label(for='description') Description
                 textarea#description.form-control(rows='5', name='description')
-                small.form-text.text-muted Give your cluster a description
+                small.form-text Give your cluster a description
             .form-group
                 input.btn.btn-outline-primary.float-sm-right(type='submit', value='Create cluster')

@@ -1,20 +1,20 @@
 $(function(){
     $('td > a.fa-trash').on('click', function(){
         var id = $(this).closest('tr').data('id');
-        var node = getNodeByID(id);
-        var modal = $('#deleteNode');
+        var cluster = getClusterByID(id);
+        var modal = $('#deleteCluster');
 
-        modal.find('.node').text(node.name);
+        modal.find('.cluster').text(cluster.name);
         modal.find('.confirm-delete').data('id', id);
     });
 
-    $('#deleteNode .confirm-delete').on('click', function(e){
+    $('#deleteCluster .confirm-delete').on('click', function(e){
         var id = $(this).data('id');
-        var node = getNodeById(id);
+        var cluster = getClusterByID(id);
 
-        displayLiveNotification("Deleting node: " + node.name);
+        displayLiveNotification("Deleting cluster: " + cluster.name);
         $.ajax({
-            url: '/clusters/delete-node/' + id,
+            url: '/clusters/delete-cluster/' + id,
             type: 'DELETE',
             success: function(r) {
                 if(r.success) {
@@ -27,7 +27,7 @@ $(function(){
                 displayLiveNotification(r, "error");
             }
         });
-        $('#deleteNode').modal('hide');
+        $('#deleteCluster').modal('hide');
         $("[data-id='" + id + "']").fadeOut(function(){
             $(this).remove();
         });
@@ -35,10 +35,9 @@ $(function(){
 
     $('td > a.fa-pencil').on('click', function(e){
         var id = $(this).closest('tr').data('id');
-        var node = getNodeByID(id);
-        var modal = $('#editNode');
-        console.log(node);
-        modal.find('.modal-title').text("Edit node - " + node.name);
+        var cluster = getClusterByID(id);
+        var modal = $('#editCluster');
+        modal.find('.modal-title').text("Edit cluster - " + cluster.name);
 
 
         // TODO: Permissions
@@ -46,8 +45,8 @@ $(function(){
     });
 });
 
-function getNodeByID(id){
-    return $.grep(nodes, function(e){
+function getClusterByID(id){
+    return $.grep(clusters, function(e){
         return e.id === id
     })[0];
 }

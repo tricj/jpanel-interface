@@ -26,13 +26,26 @@ router.get('/view/:id', function(req, res, next){
     });
 });
 
+/*
+ * POST requests
+ */
 router.post('/create', function(req, res, next){
     // TODO: Validate inputs
     clusters.createCluster({
-        name: req.body.name,
-        description: req.body.description
+        name: req.params.name,
+        description: req.params.description
     });
-    res.render('clusters/create');
+    res.redirect('/clusters');
+});
+
+router.post('/create-node', function(req, res, next) {
+    var clusterID = req.params.clusterID;
+    var name = req.params.name;
+    var hostname = req.params.hostname;
+    var username = req.params.username;
+    var privateKey = req.params.privateKey;
+
+    // TODO: Set to master node if no other nodes exist
 });
 
 module.exports = router;
