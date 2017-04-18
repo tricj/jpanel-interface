@@ -47,15 +47,19 @@ block content
                         .form-group
                             label.form-control-label(for='name') Name
                             input.form-control(type='text', id='name', name='name')
+                            small.form-text Give your node a name
                         .form-group
                             label.form-control-label(for='hostname') Hostname
                             input.form-control(type='text', id='hostname', name='hostname')
+                            small.form-text Specify your node hostname
                         .form-group
                             label.form-control-label(for='username') Username
                             input.form-control(type='text', id='username', name='username')
+                            small.form-text Specify the username to use for SSH connections
                         .form-group
                             label.form-control-label(for='privateKey') Private key
-                            textarea.form-control(id='privateKey', name='privateKey')
+                            textarea.form-control(id='privateKey', name='privateKey', rows='5')
+                            small.form-text Copy your private key to enable SSH to your node
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-primary(type='button') Create new node

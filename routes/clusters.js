@@ -8,10 +8,6 @@ router.get('/', function(req, res, next){
     });
 });
 
-router.get('/create', function(req, res, next){
-    res.render('clusters/create');
-});
-
 router.get('/view/:id', function(req, res, next){
     var id = req.params.id;
     clusters.getClusterById(id, function(c){
@@ -29,23 +25,155 @@ router.get('/view/:id', function(req, res, next){
 /*
  * POST requests
  */
-router.post('/create', function(req, res, next){
-    // TODO: Validate inputs
-    clusters.createCluster({
-        name: req.params.name,
-        description: req.params.description
+router.post('/create-cluster', function(req, res, next) {
+    req.checkBody({
+        'name': {
+            isLength: {
+                options: [{
+                    min: 2,
+                    max: 64
+                }],
+                errorMessage: 'Name must be between 2 and 64 characters'
+            }
+        },
+        'description': {
+            optional: true,
+            isLength: {
+                options: [{
+                    min: 0,
+                    max: 256
+                }],
+                errorMessage: 'Description must be less than 256 characters'
+            }
+        }
     });
-    res.redirect('/clusters');
+
+    req.getValidationResult().then(function(result){
+        if(result.isEmpty()){
+            // No errors
+            // TODO: Log to database
+            console.log("Creating cluster: {name:\"" + req.body.name + "\", description: \"" + req.body.description + "\"}");
+            clusters.createCluster({
+                name: req.body.name,
+                description: req.body.description
+            }, function(success){
+                if(success){
+                    // Created cluster
+                    res.json({
+                        success: true,
+                        msg: 'Created cluster successfully'
+                    })
+                } else {
+                    // An error occured
+                    res.json({
+                        success: false,
+                        msg: 'Failed to create cluster, please try again'
+                    })
+                }
+            });
+        } else {
+            // Error(s) occurred
+            res.json({
+                success: false,
+                errors: result
+            });
+            return;
+        }
+    });
 });
 
 router.post('/create-node', function(req, res, next) {
-    var clusterID = req.params.clusterID;
-    var name = req.params.name;
-    var hostname = req.params.hostname;
-    var username = req.params.username;
-    var privateKey = req.params.privateKey;
+    var clusterID = req.body.clusterID;
+    var name = req.body.name;
+    var hostname = req.body.hostname;
+    var username = req.body.username;
+    var privateKey = req.body.privateKey;
 
     // TODO: Set to master node if no other nodes exist
+});
+
+/*
+ * DELETE requests
+ */
+router.delete('/delete-cluster/:id', function(req, res, next) {
+    req.checkParams({
+        'id': {
+            notEmpty: true,
+            isInt: true,
+            errorMessage: 'Invalid ID'
+        }
+    });
+
+    req.getValidationResult().then(function(result){
+        if(result.isEmpty()){
+            // No errors
+            clusters.deleteCluster(req.params.id, function(e){
+                console.log("Deleting cluster: " + e);
+                if(e){
+                    // Success deleting cluster
+                    // Cascade delete any nodes with the associated clusterID
+                    nodes.deleteNodeByClusterId(req.params.id, function(e){
+                        if(e){
+                            res.json({
+                                success: true,
+                                msg: 'Successfully deleted cluster'
+                            });
+                        } else {
+                            res.json({
+                                success: true,
+                                msg: 'Successfully deleted cluster - error deleting associated nodes'
+                            })
+                        }
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                        msg: 'Error deleting cluster, please try again'
+                    });
+                }
+            })
+        } else {
+            // Error(s) occurred
+            res.json({
+                success: false,
+                errors: result
+            });
+            return;
+        }
+    });
+});
+router.delete('/delete-node/:id', function(req, res, next) {
+    req.checkParams({
+        'id': {
+            notEmpty: true,
+            isInt: true,
+            errorMessage: 'Invalid ID'
+        }
+    });
+    req.getValidationResult().then(function(result){
+        if(result.isEmpty()){
+            nodes.deleteNodeById(req.params.id, function(e){
+                if(e){
+                    res.json({
+                        success: true,
+                        msg: 'Successfully deleted node'
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                        msg: 'Error deleting node'
+                    });
+                }
+            });
+        } else {
+            // Error(s) occurred
+            res.json({
+                success: false,
+                errors: result
+            });
+            return;
+        }
+    });
 });
 
 module.exports = router;

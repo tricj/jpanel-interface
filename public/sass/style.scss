@@ -93,6 +93,17 @@ nav.top-nav {
      .alert {
        border-radius: 0;
      }
+     .alert-success {
+       background: green;
+       color: black;
+     }
+     .alert-warning {
+       background: orange;
+       color: black;
+     }
+     .alert-error {
+       background: red;
+     }
      .alert:hover {
        border-color: $theme-highlight;
      }

@@ -8,6 +8,31 @@ $(function(){
         modal.find('.confirm-delete').data('id', id);
     });
 
+    function createCluster(e){
+        e.preventDefault();
+        displayLiveNotification("Attempting to create cluster");
+        $.ajax({
+            url: '/clusters/create-cluster',
+            type: 'POST',
+            data: $('#createClusterForm').serialize(),
+            success: function(r){
+                console.log(r);
+                if(r.success) {
+                    displayLiveNotification(r.msg, "success");
+                    // TODO: Update table with new entry
+                } else {
+                    displayLiveNotification(r.msg, "error");
+                }
+            }, error: function(r){
+                displayLiveNotification(r, "error");
+            }
+        });
+        $('#createCluster').modal('hide');
+    }
+
+    $('#createCluster .btn-primary').on('click', createCluster);
+    $('#createClusterForm').on('submit', createCluster);
+
     $('#deleteCluster .confirm-delete').on('click', function(e){
         var id = $(this).data('id');
         var cluster = getClusterByID(id);
@@ -20,7 +45,6 @@ $(function(){
                 if(r.success) {
                     displayLiveNotification(r.msg, "success");
                 } else {
-                    console.log(r);
                     displayLiveNotification(r.msg, "error");
                 }
             }, error: function(r){

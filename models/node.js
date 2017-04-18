@@ -22,6 +22,31 @@ module.exports.getNodesByCluster = function(clusterId, callback){
     });
 };
 
+
+module.exports.deleteNodeById = function(id, callback){
+    Nodes.destroy({
+        where: {
+            id: id
+        }
+    }).then(function(e){
+        callback(e);
+    }).catch(function(e){
+        callback(e);
+    });
+};
+
+module.exports.deleteNodeByClusterId = function(id, callback){
+    Nodes.destroy({
+        where: {
+            clusterId: id
+        }
+    }).then(function(e){
+        callback(e);
+    }).catch(function(e){
+        callback(e);
+    })
+};
+
 /**
  * Check if master flag is set
  * @param node

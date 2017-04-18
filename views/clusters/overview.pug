@@ -19,7 +19,7 @@ block content
                 tr
                     td Cluster
                     td.text-right
-                        a.fa.fa-plus(title='Create a cluster', href='/clusters/create', data-tooltip='true', data-placement='left')
+                        a.fa.fa-plus(data-toggle='modal',data-target='#createCluster', title='Create a cluster', data-tooltip='true', data-placement='left')
             tbody
                 each cluster in clusters
                     tr(data-id=cluster.id)
@@ -27,6 +27,26 @@ block content
                         td.text-right
                             a.fa.fa-pencil(data-toggle='modal', data-target='#editCluster', title='Modify cluster', data-tooltip='true')
                             a.fa.fa-trash(data-toggle='modal', data-target='#deleteCluster', title='Delete cluster', data-tooltip='true')
+    .modal.fade(id='createCluster', tabindex='-1')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Create cluster
+                    button.close(type='button', data-dismiss='modal', aria-label='close')
+                        span.fa.fa-times-circle(aria-hidden='true')
+                .modal-body
+                    form.form-horizontal(id='createClusterForm')
+                        .form-group
+                            label.form-control-label(for='name') Name
+                            input#name.form-control(type='text', name='name')
+                            small.form-text Name your cluster
+                        .form-group
+                            label.form-control-label(for='description') Description
+                            textarea#description.form-control(rows='5', name='description')
+                            small.form-text Give your cluster a description
+                .modal-footer
+                    button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='button') Create
 
     .modal.fade(id='editCluster', tabindex='-1')
         .modal-dialog(role='document')
@@ -47,7 +67,7 @@ block content
                 .modal-header
                     h5.modal-title Are you sure you want to delete this cluster?
                 .modal-body.text-center
-                    p The following cluster will be deleted
+                    p The following cluster <strong>and its nodes</strong> will be deleted
                     p.cluster
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
