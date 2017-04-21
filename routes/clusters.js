@@ -118,6 +118,7 @@ router.post('/create-node', function(req, res, next) {
     });
 
     req.getValidationResult().then(function(result){
+        // TODO: Save private key to file and set privateKey to path of file in database
         if(result.isEmpty()){
             // no errors
             nodes.createNode({
@@ -155,8 +156,6 @@ router.post('/create-node', function(req, res, next) {
             return;
         }
     });
-
-    // TODO: Set to master node if no other nodes exist
 });
 
 /*
