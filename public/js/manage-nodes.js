@@ -8,9 +8,26 @@ $(function(){
         modal.find('.confirm-delete').data('id', id);
     });
 
+    $('#createNode .submit').on('click', function(e){
+        e.preventDefault();
+        displayLiveNotification("Creating node");
+
+        $.ajax({
+            url: '/clusters/create-node',
+            type: 'POST',
+            data: $('#createNodeForm').serialize(),
+            success: function(r){
+                console.log(JSON.stringify(r));
+                displayLiveNotification(r.msg, r.success ? "success" : "error");
+            }, error: function(r){
+                displayLiveNotification(r, "error")
+            }
+        });
+    });
+
     $('#deleteNode .confirm-delete').on('click', function(e){
         var id = $(this).data('id');
-        var node = getNodeById(id);
+        var node = getNodeByID(id);
 
         displayLiveNotification("Deleting node: " + node.name);
         $.ajax({
@@ -20,7 +37,6 @@ $(function(){
                 if(r.success) {
                     displayLiveNotification(r.msg, "success");
                 } else {
-                    console.log(r);
                     displayLiveNotification(r.msg, "error");
                 }
             }, error: function(r){

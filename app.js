@@ -118,6 +118,14 @@ database.orm.sync({force: false}).then(function(){
     //     console.log("Node found: " + JSON.stringify(n));
     // });
 
+    /**
+     * TESTING NODE MASTER FLAG
+     */
+    // var Cluster = require('./models/cluster');
+    // Cluster.setMasterNode(24, 1, function(){
+    //
+    // });
+
 
     /**
      * TESTING SSH CONNECTION

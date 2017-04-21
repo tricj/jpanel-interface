@@ -1,9 +1,16 @@
 var database = require('../config/database');
 var Nodes = database.Nodes;
+var clusters = require('./cluster');
 
 module.exports.createNode = function(node, callback){
-    Nodes.create(node);
-    // todo: callback
+    Nodes.create(node).then(function(r){
+        var node = r.dataValues;
+        clusters.getClusterById(node.clusterId, function(cluster){
+            callback(true, cluster.dataValues, node);
+        });
+    }).catch(function(){
+        callback(false);
+    });
 };
 
 module.exports.getNodeById = function(id, callback){

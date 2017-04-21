@@ -89,6 +89,73 @@ router.post('/create-node', function(req, res, next) {
     var username = req.body.username;
     var privateKey = req.body.privateKey;
 
+    // TODO: Improve validation rules
+
+    req.checkBody({
+        'clusterID': {
+            isInt: {
+                errorMessage: 'Cluster ID not set correctly'
+            }
+        },
+        'hostname': {
+            isLength: {
+                options: [{
+                    min: 2,
+                    max: 256
+                }],
+                errorMessage: 'Hostname not set correctly'
+            }
+        },
+        'username': {
+            isLength: {
+                options: [{
+                    min: 1,
+                    max: 256
+                }],
+                errorMessage: 'Username not set'
+            }
+        }
+    });
+
+    req.getValidationResult().then(function(result){
+        if(result.isEmpty()){
+            // no errors
+            nodes.createNode({
+                clusterId: clusterID,
+                name: name,
+                username: username,
+                hostname: hostname,
+                privateKey: privateKey
+            }, function(success, cluster, node){
+                if(success){
+                    if(cluster.masterNode == null){
+                        clusters.setMasterNode(cluster.id, node.id, function(){
+                            console.log("Set node as master");
+                        });
+                    }
+                    // Created cluster
+                    res.json({
+                        success: true,
+                        msg: 'Created cluster successfully'
+                    })
+                } else {
+                    // An error occured
+                    res.json({
+                        success: false,
+                        msg: 'Failed to create cluster, please try again'
+                    })
+                }
+            });
+        } else {
+            console.log("Error creating node - validation failed");
+            res.json({
+                success: 'false',
+                msg: result
+            });
+            return;
+        }
+    });
+
     // TODO: Set to master node if no other nodes exist
 });
 
@@ -143,6 +210,7 @@ router.delete('/delete-cluster/:id', function(req, res, next) {
     });
 });
 router.delete('/delete-node/:id', function(req, res, next) {
+    // TODO: Remove master node flag if applicable
     req.checkParams({
         'id': {
             notEmpty: true,

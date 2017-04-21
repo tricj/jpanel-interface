@@ -43,7 +43,7 @@ block content
                         span.fa.fa-times-circle(aria-hidden='true')
                 .modal-body
                     form.form-horizontal(id='createNodeForm', action='/clusters/create-node', method='post')
-                        input(type='hidden', id='createNodeClusterID', name='clusterID', value='')
+                        input(type='hidden', id='createNodeClusterID', name='clusterID', value=cluster.id)
                         .form-group
                             label.form-control-label(for='name') Name
                             input.form-control(type='text', id='name', name='name')
@@ -62,7 +62,7 @@ block content
                             small.form-text Copy your private key to enable SSH to your node
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
-                    button.btn.btn-primary(type='button') Create new node
+                    button.btn.btn-primary.submit(type='button') Create new node
     .modal.fade(id='editNode', tabindex='-1')
         .modal-dialog(role='document')
             .modal-content
