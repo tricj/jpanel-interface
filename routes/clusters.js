@@ -22,6 +22,15 @@ router.get('/view/:id', function(req, res, next){
     });
 });
 
+router.get('/set-active/:id', function(req, res, next) {
+    var id = req.params.id;
+    req.session.activeCluster = id;
+    res.json({
+        success: true,
+        msg: "Active cluster changed"
+    })
+});
+
 router.get('/node-status/:id', function(req, res, next) {
     var ssh = require('../config/ssh');
     var id = req.params.id;

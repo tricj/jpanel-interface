@@ -2,16 +2,12 @@ header
     nav.side-nav
         h3: a(href='/') Dashboard
         .node-selector
-            h6 Active node
+            h6 Active cluster
+            script var clusterSelection = !{JSON.stringify(clusterSelection)};
             select.custom-select
-                option(data-type='cluster') Cluster Name1
-                option  Node A
-                option  Node B
-                option(data-type='cluster') Cluster Name2
-                option  Node C
-                option  Node D
-                option  Node E
-            small: a(href='#') Manage this node
+                each cluster in clusterSelection
+                    option(data-id=cluster.id)= cluster.name
+            small: a(href='#', id='manage-cluster') Manage this cluster
         .link-group
             a.title(href='', data-toggle='collapse', data-target='#linkgroup1') Account
             ul.collapse.show#linkgroup1
@@ -24,7 +20,7 @@ header
         .link-group
             a.title(href='', data-toggle='collapse', data-target='#linkgroup3') File Manager
             ul.collapse.show#linkgroup3
-                li: a(href='') Cloud store
+                li: a(href='/file-manager/cloud-store') Cloud store
         .link-group
             a.title(href='', data-toggle='collapse', data-target='#linkgroup4') Services
             ul.collapse.show#linkgroup4

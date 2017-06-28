@@ -85,8 +85,17 @@ database.orm.sync({force: false}).then(function(){
         res.locals.success_msg  = req.flash('success_msg');
         // User
         res.locals.user         = req.user || null;
-        next();
+        // Nodes
+        getClusterList(res, next);
     });
+
+    function getClusterList(res, next){
+        var cluster = require('./models/cluster');
+        cluster.getAll(function(clusters){
+            res.locals.clusterSelection = clusters;
+            next();
+        });
+    }
 
     /*
      * Logging configuration
@@ -148,6 +157,7 @@ database.orm.sync({force: false}).then(function(){
     app.use('/', require('./routes/index'));
     app.use('/account', require('./routes/account'));
     app.use('/clusters', require('./routes/clusters'));
+    app.use('/file-manager', require('./routes/file-manager'));
 
     /*
      * Configure views

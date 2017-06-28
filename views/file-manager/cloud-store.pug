@@ -1,0 +1,31 @@
+extends ../layout
+block javascript
+    script(type='text/javascript', src='/js/dropdown.js')
+    script(type='text/javascript', src='/js/manage-nodes.js')
+    script(type='text/javascript', src='https://use.fontawesome.com/c695705283.js')
+block content
+    .content
+        .no-active-cluster.display-none
+            p No active cluster or node.
+            small Select one on the left menu
+        .file-viewer
+            script var result = !{JSON.stringify(result)};
+            each line in result
+                pre= line
+            //p Clustered file tree
+            //nav.breadcrumb
+            //table.table.table-hover
+                thead
+                    tr
+                        td File
+                        td Actions
+                        td
+                            a Create new file
+                tbody
+                    //each file in files
+                        pre= JSON.stringify(file)
+                        //tr(data-id=cluster.id)
+                            td: a(href='/clusters/view/' + cluster.id)= cluster.name
+                            td.text-right
+                                a.fa.fa-pencil(data-toggle='modal', data-target='#editCluster', title='Modify cluster', data-tooltip='true')
+                                a.fa.fa-trash(data-toggle='modal', data-target='#deleteCluster', title='Delete cluster', data-tooltip='true')

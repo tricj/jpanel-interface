@@ -18,6 +18,8 @@ $(function(){
     $('#live-notifications > .alert').on('click', function(){
         removeAlert(this);
     });
+
+
 });
 
 function removeAlert(alert){

@@ -10,6 +10,14 @@ module.exports.createCluster = function(node, callback){
     })
 };
 
+module.exports.getAll = function(callback){
+    Clusters.sync().then(function(){
+        Clusters.findAll().then(function(clusters){
+            callback(clusters);
+        });
+    });
+};
+
 module.exports.update = function(id, name, description, callback){
     Clusters.update({
         name: name,
@@ -65,8 +73,8 @@ module.exports.getAllClusters = function(callback){
 
 module.exports.getClusterById = function(id, callback){
     Clusters.sync().then(function(){
-        Clusters.findById(id).then(function(node){
-            callback(node);
+        Clusters.findById(id).then(function(cluster){
+            callback(cluster);
         });
     });
 };
