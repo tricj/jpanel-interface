@@ -324,3 +324,16 @@ fieldset {
     padding: 0 5px;
   }
 }
+
+
+.fa {
+  &.ico-green {
+    color: $ico-green !important;
+  }
+  &.ico-orange {
+    color: $ico-orange !important;
+  }
+  &.ico-red {
+    color: $ico-red !important;
+  }
+}

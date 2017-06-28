@@ -10,6 +10,23 @@ module.exports.createCluster = function(node, callback){
     })
 };
 
+module.exports.update = function(id, name, description, callback){
+    Clusters.update({
+        name: name,
+        description: description
+    }, {
+        where: {
+            id: id
+        }
+    }).then(function(numRows){
+        if(numRows != 1){
+            return callback(false);
+        } else {
+            return callback(true);
+        }
+    });
+};
+
 module.exports.deleteCluster = function(id, callback){
     Clusters.destroy({
         where: {

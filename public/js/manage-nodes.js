@@ -53,14 +53,81 @@ $(function(){
         var id = $(this).closest('tr').data('id');
         var node = getNodeByID(id);
         var modal = $('#editNode');
-        console.log(node);
+
         modal.find('.modal-title').text("Edit node - " + node.name);
+
+        console.log(JSON.stringify(node));
+
+        modal.find('#editNodeClusterID').val(node.id);
+        modal.find('#editName').val(node.name);
+        modal.find('#editHostname').val(node.hostname);
+        modal.find('#editUsername').val(node.username);
+        modal.find('#editPrivateKey').val(node.privateKey);
 
 
         // TODO: Permissions
         // TODO: Save user changes
     });
+
+    $('#editNode .btn-primary').on('click', function(e){
+        // Save button clicked
+        editNode(e);
+    });
+
+    $('#editNodeForm').on('submit', function(e){
+        // Form submission
+        editNode(e);
+    });
+
+    $('.status').each(function(){
+        var id = $(this).parent().attr('data-id');
+        var element = $(this).find('a');
+        var span    = $(this).find('span');
+        console.log("Agent ID: " + id);
+        $.ajax({
+            url: '/clusters/node-status/' + id,
+            type: 'GET',
+            success: function(r){
+                console.log(r);
+                if(r.success){
+                    // Node is online
+                    element.removeClass();
+                    element.addClass('fa').addClass('fa-check').addClass('ico-green');
+                    span.text("ONLINE");
+                } else {
+                    // Node is offline
+                    element.removeClass();
+                    element.addClass('fa').addClass('fa-times').addClass('ico-red');
+                    span.text("OFFLINE");
+                }
+            }, error: function(r){
+                    displayLiveNotification("Cannot obtain status for node: " + id, "error");
+            }
+        });
+    });
 });
+
+function editNode(e){
+    e.preventDefault();
+    displayLiveNotification("Attempting to edit node");
+    $.ajax({
+        url: '/clusters/edit-node',
+        type: 'POST',
+        data: $('#editNodeForm').serialize(),
+        success: function(r){
+            console.log(r);
+            if(r.success) {
+                displayLiveNotification(r.msg, "success");
+            } else {
+                displayLiveNotification(r.msg, "error");
+            }
+        }, error: function(r){
+            displayLiveNotification(r, "error");
+        }
+    });
+
+    $('#editNode').modal('hide');
+}
 
 function getNodeByID(id){
     return $.grep(nodes, function(e){

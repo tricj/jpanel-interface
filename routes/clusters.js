@@ -22,6 +22,28 @@ router.get('/view/:id', function(req, res, next){
     });
 });
 
+router.get('/node-status/:id', function(req, res, next) {
+    var ssh = require('../config/ssh');
+    var id = req.params.id;
+    nodes.getNodeById(id, function(node){
+        ssh.connect({
+            host: node.hostname,
+            username: node.username,
+            privateKey: node.privateKey
+        }).then(function(){
+            res.json({
+                success: true,
+                msg: id
+            })
+        }, function(e){
+            res.json({
+                success: false,
+                msg: id
+            })
+        });
+    });
+});
+
 /*
  * POST requests
  */
@@ -78,6 +100,56 @@ router.post('/create-cluster', function(req, res, next) {
                 errors: result
             });
             return;
+        }
+    });
+});
+
+router.post('/edit-cluster', function(req, res, next) {
+    var clusterID = req.body.clusterID;
+    var name = req.body.name;
+    var description = req.body.description;
+
+    // TODO: Validation
+
+    clusters.update(clusterID, name, description, function(success){
+        if(success){
+            console.log("Updated cluster " + clusterID);
+            res.json({
+                success: true,
+                msg: 'Created cluster successfully'
+            })
+        } else {
+            console.error("An error occured while updating cluster " + clusterID);
+            res.json({
+                success: false,
+                msg: 'Failed to update cluster'
+            })
+        }
+    });
+});
+
+router.post('/edit-node', function(req, res, next) {
+    var nodeID = req.body.nodeID;
+    var name = req.body.name;
+    var hostname = req.body.hostname;
+    var username = req.body.username;
+    var privateKey = req.body.privateKey;
+
+    // TODO: Validation
+
+    nodes.update(nodeID, name, hostname, username, privateKey, function(success){
+        if(success){
+            console.log("Updated node " + nodeID);
+            res.json({
+                success: true,
+                msg: 'Created node successfully'
+            })
+        } else {
+            console.error("An error occured while updating cluster " + nodeID);
+            res.json({
+                success: false,
+                msg: 'Failed to update node'
+            })
         }
     });
 });

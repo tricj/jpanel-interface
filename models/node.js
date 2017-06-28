@@ -54,6 +54,25 @@ module.exports.deleteNodeByClusterId = function(id, callback){
     })
 };
 
+module.exports.update = function(id, name, hostname, username, privateKey, callback){
+    Nodes.update({
+        name: name,
+        hostname: hostname,
+        username: username,
+        privateKey: privateKey
+    }, {
+        where: {
+            id: id
+        }
+    }).then(function(numRows, a, b){
+        if(numRows != 1){
+            return callback(false);
+        } else {
+            return callback(true);
+        }
+    });
+};
+
 /**
  * Check if master flag is set
  * @param node

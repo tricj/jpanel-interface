@@ -20,6 +20,7 @@ block content
                 tr
                     td Node
                     td Hostname
+                    td Status
                     td.text-right
                         a.fa.fa-plus(title='Create a new node', data-toggle='modal', data-target='#createNode', data-tooltip='true', data-placement='left')
             tbody
@@ -27,6 +28,9 @@ block content
                     tr(data-id=node.id)
                         td= node.name
                         td= node.hostname
+                        td.status
+                            a.fa.fa-spinner.fa-pulse.ico-orange
+                            span.small Attempting connection
                         td.text-right
                             if node.isMaster
                                 span.badge.badge-default Master node
@@ -71,7 +75,24 @@ block content
                     button.close(type='button', data-dismiss='modal', aria-label='close')
                         span.fa.fa-times-circle(aria-hidden='true')
                 .modal-body
-                    // TODO
+                    form.form-horizontal(id='editNodeForm', action='/clusters/create-node', method='post')
+                        input(type='hidden', id='editNodeClusterID', name='nodeID')
+                        .form-group
+                            label.form-control-label(for='name') Name
+                            input.form-control(type='text', id='editName', name='name')
+                            small.form-text Give your node a name
+                        .form-group
+                            label.form-control-label(for='hostname') Hostname
+                            input.form-control(type='text', id='editHostname', name='hostname')
+                            small.form-text Specify your node hostname
+                        .form-group
+                            label.form-control-label(for='username') Username
+                            input.form-control(type='text', id='editUsername', name='username')
+                            small.form-text Specify the username to use for SSH connections
+                        .form-group
+                            label.form-control-label(for='privateKey') Private key
+                            textarea.form-control(id='editPrivateKey', name='privateKey', rows='5')
+                            small.form-text Copy your private key to enable SSH to your node
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-primary(type='button') Save

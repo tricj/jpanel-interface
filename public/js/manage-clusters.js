@@ -61,13 +61,48 @@ $(function(){
         var id = $(this).closest('tr').data('id');
         var cluster = getClusterByID(id);
         var modal = $('#editCluster');
-        modal.find('.modal-title').text("Edit cluster - " + cluster.name);
 
+        modal.find('#clusterID').val(id);
+        modal.find('.modal-title').text("Edit cluster - " + cluster.name);
+        modal.find('#editName').val(cluster.name);
+        modal.find('#editDescription').text(cluster.description);
 
         // TODO: Permissions
         // TODO: Save user changes
     });
+
+    $('#editCluster .btn-primary').on('click', function(e){
+        // Save button clicked
+        editCluster(e);
+    });
+
+    $('#editClusterForm').on('submit', function(e){
+        // Form submission
+        editCluster(e);
+    });
 });
+
+function editCluster(e){
+    e.preventDefault();
+    displayLiveNotification("Attempting to edit cluster");
+    $.ajax({
+        url: '/clusters/edit-cluster',
+        type: 'POST',
+        data: $('#editClusterForm').serialize(),
+        success: function(r){
+            console.log(r);
+            if(r.success) {
+                displayLiveNotification(r.msg, "success");
+            } else {
+                displayLiveNotification(r.msg, "error");
+            }
+        }, error: function(r){
+                displayLiveNotification(r, "error");
+        }
+    });
+
+    $('#editCluster').modal('hide');
+}
 
 function getClusterByID(id){
     return $.grep(clusters, function(e){

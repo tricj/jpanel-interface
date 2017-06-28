@@ -94,43 +94,26 @@ database.orm.sync({force: false}).then(function(){
     app.use(logger('dev'));
 
     /**
-     * TESTING DATABASE
-     */
-
-    // var User = require('./models/user');
-    // User.createUser({
-    //     username: 'jb',
-    //     password: 'pass'
-    // });
-
-    /**
-     * TESTING NODE CREATION
-     */
-    // var Node = require('./models/node');
-    // Node.createNode({
-    //     name: 'jira',
-    //     hostname: '52.56.79.136',
-    //     username: 'ubuntu',
-    //     privateKey: 'C:\\Users\\Jay\\Google Drive\\Uni\\Year 3 resit\\dissertation\\.ssh\\ldn-aws-openssh.key'
-    // });
-    //
-    // Node.getNodeById(1, function(n){
-    //     console.log("Node found: " + JSON.stringify(n));
-    // });
-
-    /**
-     * TESTING NODE MASTER FLAG
-     */
-    // var Cluster = require('./models/cluster');
-    // Cluster.setMasterNode(24, 1, function(){
-    //
-    // });
-
-
-    /**
      * TESTING SSH CONNECTION
      */
-//var ssh = require('./config/ssh');
+    // var ssh = require('./config/ssh');
+    // var nodes = require('./models/node');
+    // var nodeid = 9;
+    // nodes.getNodeById(nodeid, function(node){
+    //     ssh.connect({
+    //         host: node.hostname,
+    //         username: node.username,
+    //         privateKey: node.privateKey
+    //     }).then(function(){
+    //         console.log('Connected to host');
+    //         ssh.execCommand('hostname && whoami', { cwd:'~' }).then(function(result) {
+    //             console.log('STDOUT: ' + result.stdout);
+    //             console.log('STDERR: ' + result.stderr);
+    //         });
+    //     }, function(e){
+    //         console.log("Error connecting to node id:" + nodeid);
+    //     });
+    // });
 
 
     /** END OF TESTING */

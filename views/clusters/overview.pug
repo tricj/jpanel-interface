@@ -56,7 +56,14 @@ block content
                     button.close(type='button', data-dismiss='modal', aria-label='close')
                         span.fa.fa-times-circle(aria-hidden='true')
                 .modal-body
-                    // TODO
+                    form.form-horizontal(id='editClusterForm')
+                        input(type='hidden', id='clusterID', name='clusterID')
+                        .form-group
+                            label.form-control-label(for='name') Name
+                            input#editName.form-control(type='text', name='name')
+                        .form-group
+                            label.form-control-label(for='description') Description
+                            textarea#editDescription.form-control(rows='5', name='description')
                 .modal-footer
                     button.btn.btn-outline-secondary(type='button', data-dismiss='modal') Cancel
                     button.btn.btn-primary(type='button') Save
